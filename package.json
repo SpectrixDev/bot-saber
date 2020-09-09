@@ -1,7 +1,7 @@
 {
   "name": "beat-saber-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord Bot for beat saber",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.3.1"
-  }
+    "discord.js": "^12.3.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpectrixOfficial/beat-saber-bot.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/SpectrixOfficial/beat-saber-bot/issues"
+  },
+  "homepage": "https://github.com/SpectrixOfficial/beat-saber-bot#readme",
+  "devDependencies": {}
 }
