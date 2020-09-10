@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const rp = require("request-promise");
 
 module.exports = {
   name: "user-by-id",
@@ -9,7 +8,7 @@ module.exports = {
   args: true,
   usage: "b!user-by-id <Scoresaber ID>",
 
-  async execute(msg, args) { // for args, the id can be a steam id, so we need to maybe make a search feature where you can put steam username and get steam ID numbers
+  async execute(msg, args) {
     var axios = require("axios");
 
     var config = {
@@ -22,20 +21,47 @@ module.exports = {
 
     axios(config)
       .then((res) => {
-        const { playerInfo } = res.data;
-        const { playerId, playerName, avatar, rank, countryRank, pp, country } =
-          playerInfo;
-          
+        const { playerInfo, scoreStats } = res.data;
+        const {
+          playerId,
+          playerName,
+          avatar,
+          rank,
+          countryRank,
+          pp,
+          country,
+        } = playerInfo;
+        const {
+          totalScore,
+          totalRankedScore,
+          averageRankedAccuracy,
+          totalPlayCount,
+          rankedPlayCount,
+        } = scoreStats;
+
         const dataEmbed = new Discord.MessageEmbed()
           .setColor("#309eff")
           .setTitle(`**User:** ${playerName}`)
           .setURL(`https://new.scoresaber.com/u/${playerId}`)
           .setAuthor("Beat Saber Bot")
-          .setDescription(
-            `**Rank:** ${rank}\n` +
-              `**Country Rank:** ${countryRank}\n` +
-              `**PP:** ${pp}\n` +
-              `**Country:** ${country}`,
+          .addFields(
+            {
+              name: "__Player Info__",
+              value: `**Rank:** ${rank}\n` +
+                `**Country Rank:** ${countryRank}\n` +
+                `**PP:** ${pp}\n` +
+                `**Country:** ${country}`,
+            },
+            {
+              name: "__Player Stats__\n",
+              value: `**Total Score:** ${totalScore}\n` +
+                `**Total Ranked Score:** ${totalRankedScore}\n` +
+                `**Average Ranked Accuracy:** ${Math.round(
+                  (averageRankedAccuracy + Number.EPSILON) * 100,
+                ) / 100}%\n` +
+                `**Total Play Count:** ${totalPlayCount}\n` +
+                `**Ranked Play Count:** ${rankedPlayCount}`,
+            },
           )
           .setThumbnail(`https://new.scoresaber.com${avatar}`);
 
