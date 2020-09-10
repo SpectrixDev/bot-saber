@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
-const rp = require("request-promise");
 
 module.exports = {
-  name: "user",
-  description: "Returns the user profile from scoresaber,",
+  name: "user-by-name",
+  aliases: ["name", "user"],
+  description:
+    "Returns the user profile from scoresaber using the profile name.",
   args: true,
   usage: "b!user <Scoresaber ID>",
 
@@ -12,34 +13,62 @@ module.exports = {
 
     var config = {
       method: "get",
-      url: `https://new.scoresaber.com/api/player/${args[0]}/full`,
+      url: `https://new.scoresaber.com/api/players/by-name/${args[0]}`,
       headers: {
         "Content-Type": "application/json",
       },
     };
 
     axios(config)
-      .then(function (response) {
-        const { playerInfo } = response.data;
-        const { playerId, playerName, avatar, rank, countryRank, pp, country } =
-          playerInfo;
-        const dataEmbed = new Discord.MessageEmbed()
-          .setColor("#309eff")
-          .setTitle(`**User:** ${playerName}`)
-          .setURL(`https://new.scoresaber.com/u/${playerId}`)
-          .setAuthor("Beat Saber Bot")
-          .setDescription(
-            `**Rank:** ${rank}\n` +
-              `**Country Rank:** ${countryRank}\n` +
-              `**PP:** ${pp}\n` +
-              `**Country:** ${country}`,
-          )
-          .setThumbnail(`https://new.scoresaber.com${avatar}`);
+      .then((res) => {
+        const { players } = res.data;
+        const { playerId } = players[0];
 
-        console.log(JSON.stringify(response.data));
-        msg.channel.send(dataEmbed);
+        const config = {
+          method: "get",
+          url: `https://new.scoresaber.com/api/player/${playerId}/full`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        axios(config)
+          .then((res) => {
+            const { playerInfo } = res.data;
+            const {
+              playerId,
+              playerName,
+              avatar,
+              rank,
+              countryRank,
+              pp,
+              country,
+            } = playerInfo;
+
+            const dataEmbed = new Discord.MessageEmbed()
+              .setColor("#309eff")
+              .setTitle(`**User:** ${playerName}`)
+              .setURL(`https://new.scoresaber.com/u/${playerId}`)
+              .setAuthor("Beat Saber Bot")
+              .setDescription(
+                `**Rank:** ${rank}\n` +
+                  `**Country Rank:** ${countryRank}\n` +
+                  `**PP:** ${pp}\n` +
+                  `**Country:** ${country}`,
+              )
+              .setThumbnail(`https://new.scoresaber.com${avatar}`)
+              .setFooter(
+                `User ID: ${playerId}`,
+                "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+              );
+
+            msg.channel.send(dataEmbed);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
-      .catch(function (error) {
+      .catch((err) => {
         console.log(error);
       });
   },
