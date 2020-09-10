@@ -1,37 +1,46 @@
-const { Message } = require("discord.js");
-const rp = require('request-promise');
+const Discord = require("discord.js");
+const rp = require("request-promise");
 
 module.exports = {
-	name: 'user',
-	description: 'Returns the user profile from scoresaber,',
-	args: true,
-	usage: 'b!user <Scoresaber ID>',
-	
-	async execute(msg, args) { // for args, the id can be a steam id, so we need to maybe make a search feature where you can put steam username and get steam ID numbers
-        const options = {
-			uri: 'https://scoresaber.com/u/',
-			headers: headers,};
-		await rp(args)
-			.then(html => {
-				const ul = $('.columns .column:not(.is-narrow) ul', html)[0];
+  name: "user",
+  description: "Returns the user profile from scoresaber,",
+  args: true,
+  usage: "b!user <Scoresaber ID>",
 
-				const rankingLi = $('strong:contains("Player Ranking:")', ul).parent().slice(0, 1);
-				const links = $('a', rankingLi);
+  async execute(msg, args) { // for args, the id can be a steam id, so we need to maybe make a search feature where you can put steam username and get steam ID numbers
+    var axios = require("axios");
 
-				const regionLink = links.slice(-1).attr('href');
-				region = regionLink.slice(-2);
+    var config = {
+      method: "get",
+      url: `https://new.scoresaber.com/api/player/${args[0]}/full`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-				const rankingAnchors = $('li:first-child a', ul);
-				globalRank = Number(rankingAnchors.slice(0, 1).text().slice(1).replace(',', ''));
-				regionRank = Number(rankingAnchors.slice(1, 2).text().slice(2).replace(',', ''));
+    axios(config)
+      .then(function (response) {
+        const { playerInfo } = response.data;
+        const { playerId, playerName, avatar, rank, countryRank, pp, country } =
+          playerInfo;
+        const dataEmbed = new Discord.MessageEmbed()
+          .setColor("#309eff")
+          .setTitle(`**User:** ${playerName}`)
+          .setURL(`https://new.scoresaber.com/u/${playerId}`)
+          .setAuthor("Beat Saber Bot")
+          .setDescription(
+            `**Rank:** ${rank}\n` +
+              `**Country Rank:** ${countryRank}\n` +
+              `**PP:** ${pp}\n` +
+              `**Country:** ${country}`,
+          )
+          .setThumbnail(`https://new.scoresaber.com${avatar}`);
 
-				const ppLi = $('strong:contains("Performance Points:")', ul).parent().slice(0, 1);
-
-				pp = Number(ppLi.text().replace('pp', '').replace(/\s/g, '').replace('PerformancePoints:', '').replace(',', ''));
-				name = $('.title.is-5 a', html).text().trim();
-			})
-			.catch(err => {
-				console.log(err);
-			});
-        msg.channel.send(`${regionRank}\n ${region}\n, ${globalRank}\n, ${pp}\n, ${name}\n`);
-	}};
+        console.log(JSON.stringify(response.data));
+        msg.channel.send(dataEmbed);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+};
