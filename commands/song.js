@@ -50,6 +50,7 @@ module.exports = {
         } = difficulties;
 
         const mapEmbed = new Discord.MessageEmbed()
+          .setColor("#f03030")
           .setTitle(`**Beatmap:** ${name}`)
           .setURL(`https://beatsaver.com/beatmap/${key}`)
           .setAuthor("Beat Saber Bot")
@@ -57,7 +58,7 @@ module.exports = {
             {
               name: "__Beatmap Info__",
               value: (
-                `**Level Author:** ${levelAuthorName}\n` +
+                `**Level Author:** ${aiOrNo(levelAuthorName)}\n` +
                 `**Duration:** ${duration}\n` +
                 `**Beatmap BPM:** ${bpm}`
               ),
@@ -84,7 +85,11 @@ module.exports = {
               ),
             },
           )
-          .setThumbnail(`https://beatsaver.com${coverURL}`);
+          .setThumbnail(`https://beatsaver.com${coverURL}`)
+          .setFooter(
+            `Info results from Beat Saver.`,
+            "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+          );
 
         msg.channel.send(mapEmbed);
         msg.channel.stopTyping();
@@ -102,5 +107,13 @@ function yesOrNo(input) {
     return "No";
   } else {
     return "Something went wrong trying to figure out this difficulty!";
+  }
+}
+
+function aiOrNo(input) {
+  if (input == "Beat Sage") {
+    return "Created by AI.";
+  } else {
+    return input;
   }
 }

@@ -8,8 +8,8 @@ module.exports = {
   args: true,
   usage: "b!user <Scoresaber ID>",
 
-  async execute(msg, args) { 
-    msg.channel.startTyping()
+  async execute(msg, args) {
+    msg.channel.startTyping();
     var axios = require("axios");
 
     var config = {
@@ -63,9 +63,11 @@ module.exports = {
                   name: "ℹ __Player Info__",
                   value: `**Rank:** #${rank.toLocaleString()}\n` +
                     `**Country Rank:** #${countryRank.toLocaleString()}\n` +
-                    `**PP:** ${(Math.round(
-                      (pp + Number.EPSILON) * 100,
-                    ) / 100).toLocaleString()}\n` +
+                    `**PP:** ${
+                      (Math.round(
+                        (pp + Number.EPSILON) * 100,
+                      ) / 100).toLocaleString()
+                    }\n` +
                     `**Country:** ${country} :flag_${country.toLowerCase()}:`,
                 },
                 {
@@ -93,7 +95,8 @@ module.exports = {
       })
       .catch((error) => {
         console.log(error);
+        msg.channel.send(`:x: User ${args[0]} not found!`);
       });
-      msg.channel.stopTyping();
+    msg.channel.stopTyping();
   },
 };
