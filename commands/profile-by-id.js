@@ -48,22 +48,22 @@ module.exports = {
           .addFields(
             {
               name: "ℹ __Player Info__",
-              value: `**Rank:** #${rank.toLocaleString()}\n` +
-                `**Country Rank:** #${countryRank.toLocaleString()}\n` +
-                `**PP:** ${(Math.round(
+              value: `• **Rank:** #${rank.toLocaleString()}\n` +
+                `• **Country Rank:** #${countryRank.toLocaleString()}\n` +
+                `• **PP:** ${(Math.round(
                   (pp + Number.EPSILON) * 100,
                 ) / 100).toLocaleString()}\n` +
-                `**Country:** ${country} :flag_${country.toLowerCase()}:`,
+                `• **Country:** ${country} :flag_${country.toLowerCase()}:`,
             },
             {
               name: "📈 __Player Stats__\n",
-              value: `**Total Score:** ${totalScore.toLocaleString()}\n` +
-                `**Total Ranked Score:** ${totalRankedScore.toLocaleString()}\n` +
-                `**Average Ranked Accuracy:** ${Math.round(
+              value: `**• Total Score:** ${totalScore.toLocaleString()}\n` +
+                `• **Total Ranked Score:** ${totalRankedScore.toLocaleString()}\n` +
+                `•**Average Ranked Accuracy:** ${Math.round(
                    (averageRankedAccuracy + Number.EPSILON) * 100,
                  ) / 100}%\n` +
-                 `**Total Play Count:** ${totalPlayCount.toLocaleString()}\n` +
-                 `**Ranked Play Count:** ${rankedPlayCount.toLocaleString()}`,
+                 `• **Total Play Count:** ${totalPlayCount.toLocaleString()}\n` +
+                 `• **Ranked Play Count:** ${rankedPlayCount.toLocaleString()}`,
                 },
           )
           .setThumbnail(`https://new.scoresaber.com${avatar}`)
