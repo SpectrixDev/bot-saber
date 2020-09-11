@@ -41,6 +41,13 @@ module.exports = {
           heat,
           rating,
         } = stats;
+        const {
+          easy,
+          normal,
+          hard,
+          expert,
+          expertPlus,
+        } = difficulties;
 
         const mapEmbed = new Discord.MessageEmbed()
           .setTitle(`**Beatmap:** ${name}`)
@@ -66,21 +73,34 @@ module.exports = {
                 `**Rating:** ${rating}`
               ),
             },
-            // {
-            //   name: "Beatmap Difficulties",
-            //   value: (
-            //     ``
-            //   )
-            // }
+            {
+              name: "__Beatmap Difficulties__",
+              value: (
+                `**Easy:** ${yesOrNo(easy)}\n` +
+                `**Normal:** ${yesOrNo(normal)}\n` +
+                `**Hard:** ${yesOrNo(hard)}\n` +
+                `**Expert:** ${yesOrNo(expert)}\n` +
+                `**Expert Plus:** ${yesOrNo(expertPlus)}`
+              ),
+            },
           )
           .setThumbnail(`https://beatsaver.com${coverURL}`);
 
         msg.channel.send(mapEmbed);
         msg.channel.stopTyping();
-        console.log(response.data.docs[0]);
       })
       .catch(function (error) {
         console.log(error);
       });
   },
 };
+
+function yesOrNo(input) {
+  if (input == true) {
+    return "Yes";
+  } else if (input == false) {
+    return "No";
+  } else {
+    return "Something went wrong trying to figure out this difficulty!";
+  }
+}
