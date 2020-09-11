@@ -10,7 +10,6 @@ module.exports = {
 
   async execute(msg, args) {
     msg.channel.startTyping();
-    var axios = require("axios");
 
     var config = {
       method: "get",
