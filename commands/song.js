@@ -35,10 +35,8 @@ module.exports = {
         } = metadata;
         const {
           downloads,
-          plays,
           downVotes,
           upVotes,
-          heat,
           rating,
         } = stats;
         const {
@@ -49,6 +47,12 @@ module.exports = {
           expertPlus,
         } = difficulties;
 
+        var difficultylist = '';
+        for (var i in difficulties) { // Needs to be alphabetical I think
+          if (difficulties[i] == true && difficulties.hasOwnProperty(i)) {
+            difficultylist+=`- ${i.charAt(0).toUpperCase() + i.slice(1)}\n`
+          }}
+
         const mapEmbed = new Discord.MessageEmbed()
           .setColor("#f03030")
           .setTitle(`**Beatmap:** ${name}`)
@@ -56,38 +60,35 @@ module.exports = {
           .setAuthor("Beat Saber Bot")
           .addFields(
             {
-              name: "__Beatmap Info__",
+              name: "ℹ __Beatmap Info__",
               value: (
-                `**Level Author:** ${aiOrNo(levelAuthorName)}\n` +
-                `**Duration:** ${duration}\n` +
-                `**Beatmap BPM:** ${bpm}`
+                `• **Level Author:** ${aiOrNo(levelAuthorName)}\n` +
+                `• **Duration:** ${duration}\n` +
+                `• **Beatmap BPM:** ${Math.round(
+                  (bpm + Number.EPSILON) * 100,
+                  ) / 100}`
               ),
             },
             {
-              name: "__Beatmap Stats__",
+              name: "📈 __Beatmap Stats__",
               value: (
-                `**Downloads:** ${downloads}\n` +
-                `**Plays:** ${plays}\n` +
-                `**Upvotes:** ${upVotes}\n` +
-                `**Downvotes:** ${downVotes}\n` +
-                `**Heat:** ${heat}\n` +
-                `**Rating:** ${rating}`
+                `• **Downloads:** ${downloads.toLocaleString()}\n` +
+                `• **Upvotes:** ${upVotes.toLocaleString()}\n` +
+                `• **Downvotes:** ${downVotes.toLocaleString()}\n` +
+                `• **Rating:** ${Math.round(
+                  (rating*100 + Number.EPSILON) * 100,
+                  ) / 100}%`
               ),
             },
             {
-              name: "__Beatmap Difficulties__",
+              name: "📊 __Beatmap Difficulties__",
               value: (
-                `**Easy:** ${yesOrNo(easy)}\n` +
-                `**Normal:** ${yesOrNo(normal)}\n` +
-                `**Hard:** ${yesOrNo(hard)}\n` +
-                `**Expert:** ${yesOrNo(expert)}\n` +
-                `**Expert Plus:** ${yesOrNo(expertPlus)}`
-              ),
+                (difficultylist))
             },
           )
           .setThumbnail(`https://beatsaver.com${coverURL}`)
           .setFooter(
-            `Info results from Beat Saver.`,
+            `Info results from Beat Saver. 🔑${key}`,
             "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
           );
 
@@ -99,16 +100,6 @@ module.exports = {
       });
   },
 };
-
-function yesOrNo(input) {
-  if (input == true) {
-    return "Yes";
-  } else if (input == false) {
-    return "No";
-  } else {
-    return "Something went wrong trying to figure out this difficulty!";
-  }
-}
 
 function aiOrNo(input) {
   if (input == "Beat Sage") {
