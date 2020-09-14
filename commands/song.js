@@ -11,7 +11,7 @@ module.exports = {
     msg.channel.startTyping();
     var config = {
       method: "get",
-      url: `https://beatsaver.com/api/search/text/1?q=${args[0]}`,
+      url: `https://beatsaver.com/api/search/text/1?q=${encodeURI(args.join(" "))}`,
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "BeatSaberDiscordBot",
@@ -47,6 +47,8 @@ module.exports = {
           expertPlus,
         } = difficulties;
 
+        console.log(config.url)
+
         var difficultylist = '';
         for (var i in difficulties) { // Needs to be alphabetical I think
           if (difficulties[i] == true && difficulties.hasOwnProperty(i)) {
@@ -57,6 +59,7 @@ module.exports = {
           .setColor("#f03030")
           .setTitle(`**Beatmap:** ${name}`)
           .setURL(`https://beatsaver.com/beatmap/${key}`)
+          .setDescription(`📥 [One click install!](http://spectrix.pythonanywhere.com/?key=${key})`)
           .setAuthor("Beat Saber Bot")
           .addFields(
             {
@@ -88,7 +91,7 @@ module.exports = {
           )
           .setThumbnail(`https://beatsaver.com${coverURL}`)
           .setFooter(
-            `Info results from Beat Saver. 🔑${key}`,
+            `${key} 🔑 Data from BeatSaver.`,
             "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
           );
 
@@ -97,6 +100,8 @@ module.exports = {
       })
       .catch(function (error) {
         console.log(error);
+        msg.channel.send("❌ There was an error trying to execute that command! Perhaps that map doesn't exist? <:thronking:503200655507456003>")
+        msg.channel.stopTyping();
       });
   },
 };
