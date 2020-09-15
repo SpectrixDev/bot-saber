@@ -11,7 +11,9 @@ module.exports = {
     msg.channel.startTyping();
     var config = {
       method: "get",
-      url: `https://beatsaver.com/api/search/text/1?q=${encodeURI(args.join(" "))}`,
+      url: `https://beatsaver.com/api/search/advanced/0?q=${
+        encodeURI(args.join(" "))
+      }`,
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "BeatSaberDiscordBot",
@@ -47,29 +49,30 @@ module.exports = {
           expertPlus,
         } = difficulties;
 
-        console.log(config.url)
-
-        var difficultylist = '';
+        var difficultylist = "";
         for (var i in difficulties) { // Needs to be alphabetical I think
           if (difficulties[i] == true && difficulties.hasOwnProperty(i)) {
-            difficultylist+=`- ${i.charAt(0).toUpperCase() + i.slice(1)}\n`
-          }}
+            difficultylist += `- ${i.charAt(0).toUpperCase() + i.slice(1)}\n`;
+          }
+        }
 
         const mapEmbed = new Discord.MessageEmbed()
           .setColor("#f03030")
           .setTitle(`**Beatmap:** ${name}`)
           .setURL(`https://beatsaver.com/beatmap/${key}`)
-          .setDescription(`📥 [One click install!](http://spectrix.pythonanywhere.com/?key=${key})`)
+          .setDescription(
+            `📥 [One click install!](http://spectrix.pythonanywhere.com/?key=${key})`,
+          )
           .setAuthor("Beat Saber Bot")
           .addFields(
             {
               name: "ℹ __Beatmap Info__",
               value: (
                 `• **Level Author:** ${aiOrNo(levelAuthorName)}\n` +
-                `• **Duration:** ${duration}\n` +
+                `• **Duration:** ${durationCheck(duration)}\n` +
                 `• **Beatmap BPM:** ${Math.round(
                   (bpm + Number.EPSILON) * 100,
-                  ) / 100}`
+                ) / 100}`
               ),
             },
             {
@@ -79,19 +82,20 @@ module.exports = {
                 `• **Upvotes:** ${upVotes.toLocaleString()}\n` +
                 `• **Downvotes:** ${downVotes.toLocaleString()}\n` +
                 `• **Rating:** ${Math.round(
-                  (rating*100 + Number.EPSILON) * 100,
-                  ) / 100}%`
+                  (rating * 100 + Number.EPSILON) * 100,
+                ) / 100}%`
               ),
             },
             {
               name: "📊 __Beatmap Difficulties__",
               value: (
-                (difficultylist))
+                (difficultylist)
+              ),
             },
           )
           .setThumbnail(`https://beatsaver.com${coverURL}`)
           .setFooter(
-            `${key} 🔑 Data from BeatSaver.`,
+            `🔑 ${key} | Data from BeatSaver.`,
             "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
           );
 
@@ -100,7 +104,9 @@ module.exports = {
       })
       .catch(function (error) {
         console.log(error);
-        msg.channel.send("❌ There was an error trying to execute that command! Perhaps that map doesn't exist? <:thronking:503200655507456003>")
+        msg.channel.send(
+          "❌ There was an error trying to execute that command! Perhaps that map doesn't exist? <:thronking:503200655507456003>",
+        );
         msg.channel.stopTyping();
       });
   },
@@ -109,6 +115,14 @@ module.exports = {
 function aiOrNo(input) {
   if (input == "Beat Sage") {
     return "Created by AI.";
+  } else {
+    return input;
+  }
+}
+
+function durationCheck(input) {
+  if (input == 0) {
+    return "Not Specified.";
   } else {
     return input;
   }
