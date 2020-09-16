@@ -63,7 +63,7 @@ module.exports = {
           .setDescription(
             `📥 [One click install!](http://spectrix.pythonanywhere.com/?key=${key})`,
           )
-          .setAuthor("Beat Saber Bot")
+          .setAuthor("Bot Saber")
           .addFields(
             {
               name: "ℹ __Beatmap Info__",
