@@ -37,7 +37,7 @@ module.exports = {
       .catch(function (error) {
         console.log(error);
         msg.channel.send(
-          "❌ There was an error trying to execute that command! Perhaps that map doesn't exist? <:thronking:503200655507456003>",
+          "❌ There was an error trying to execute that command!",
         );
         msg.channel.stopTyping();
       });

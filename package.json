@@ -17,12 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SpectrixOfficial/beat-saber-bot.git"
+    "url": "git+https://github.com/SpectrixOfficial/bot-saber.git"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/SpectrixOfficial/beat-saber-bot/issues"
+    "url": "https://github.com/SpectrixOfficial/bot-saber/issues"
   },
-  "homepage": "https://github.com/SpectrixOfficial/beat-saber-bot#readme",
+  "homepage": "https://github.com/SpectrixOfficial/bot-saber#readme",
   "devDependencies": {}
 }
