@@ -5,6 +5,38 @@ const { prefix, token } = require("./config.json");
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.settings = new Enmap({
+  name: "settings",
+  fetchAll: false,
+  autoFetch: true,
+  cloneLevel: 'deep'
+});
+
+const defaultSettings = {	
+  prefix: "b!",	
+  modLogChannel: "mod-log",	
+  modRole: "Mod",	
+  adminRole: "Admin",	
+  welcomeChannel: "welcome",	
+  welcomeMessage: "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D"	
+}
+
+client.on("guildDelete", guild => {
+  client.settings.delete(guild.id);
+});
+
+client.on("guildMemberAdd", member => {
+  client.settings.ensure(member.guild.id, defaultSettings);
+  
+  let welcomeMessage = client.settings.get(member.guild.id, "welcomeMessage");
+  
+  welcomeMessage = welcomeMessage.replace("{{user}}", member.user.tag)
+  
+  member.guild.channels
+    .find("name", client.settings.get(member.guild.id, "welcomeChannel"))
+    .send(welcomeMessage)
+    .catch(console.error);
+});
 
 const commandFiles = fs.readdirSync("./commands").filter((file) =>
   file.endsWith(".js")
@@ -19,18 +51,16 @@ client.once("ready", () => {
   console.log("Ready!");
 });
 
-const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+client.on("message", async (message) => {
+  if(!message.guild || message.author.bot) return;
 
-client.on("message", (message) => {
-  const prefixRegex = new RegExp(
-    `^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`,
-  );
-  if (!prefixRegex.test(message.content)) return;
+  const guildConf = client.settings.ensure(message.guild.id, defaultSettings)
 
-  const [, matchedPrefix] = message.content.match(prefixRegex);
-  const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
-  const commandName = args.shift().toLowerCase();
+  if(message.content.indexOf(guildConf.prefix) !== 0) return;
 
+  const args = message.content.split(/\s+/g);
+  const commandName = args.shift().slice(guildConf.prefix.length).toLowerCase();
+  
   const commandFile = client.commands.get(commandName) ||
     client.commands.find((cmd) =>
       cmd.aliases && cmd.aliases.includes(commandName)
@@ -45,7 +75,7 @@ client.on("message", (message) => {
   }
 
   try {
-    commandFile.execute(message, args);
+    commandFile.execute(message, args, client, guildConf, defaultSettings);
   } catch (err) {
     console.error(err);
     message.reply("❌ There was an error trying to execute that command!");
