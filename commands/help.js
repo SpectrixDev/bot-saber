@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const { prefix } = require("../config.json");
 
 module.exports = {
@@ -11,12 +12,22 @@ module.exports = {
 
     if (!args.length) {
       data.push("Here's a list of all the bot's commands:");
-      data.push(commands.map((command) => command.name).join(", "));
+      data.push(commands.map((command) => command.name).join("\n"));
       data.push(
         `\nYou can send \`${prefix}help [command name]\` to get info on a specific command.`,
       );
 
-      return msg.author.send(data, { split: true })
+      let embedData = new Discord.MessageEmbed()
+        .setColor("#f03030")
+        .setTitle("**User commands.**")
+        .setAuthor("Bot Saber")
+        .setDescription(data)
+        .setFooter(
+          `Did you know: The developers love ARGs.`,
+          "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+        );
+
+      return msg.author.send(embedData)
         .then(() => {
           if (msg.channel.type === "dm") return;
           msg.reply("I've sent you a DM with all my commands!");

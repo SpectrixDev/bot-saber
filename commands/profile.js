@@ -43,7 +43,7 @@ module.exports = {
             .setColor("#309eff")
             .setTitle(`**User:** ${playerName}`)
             .setURL(`https://new.scoresaber.com/u/${playerId}`)
-            .setAuthor("Beat Saber Bot")
+            .setAuthor("Bot Saber")
             .addFields(
               {
                 name: "ℹ __Player Info__",
