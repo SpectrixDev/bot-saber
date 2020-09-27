@@ -5,7 +5,7 @@ module.exports = {
   aliases: ["config"],
   description: "Server configuration for the bot.",
   execute(msg, args, client, guildConf, defaultSettings) {
-    if (args[0] == "view") {
+    if (args.length == 0) {
       let configProps = Object.keys(guildConf).map((prop) => {
         return `${prop} : ${guildConf[prop]}`;
       });

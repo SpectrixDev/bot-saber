@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const { prefix } = require("../config.json");
-
 module.exports = {
   name: "help",
   aliases: ["commands", "h"],
@@ -11,31 +10,25 @@ module.exports = {
     const { commands } = msg.client;
 
     if (!args.length) {
-      data.push("Here's a list of all the bot's commands:");
-      data.push(commands.map((command) => command.name).join("\n"));
+      data.push("ℹ  **__Here's a list of all the bot's commands:__**\n");
+      data.push(commands.map((command) => ("• " + command.name)).join("\n"));
       data.push(
-        `\nYou can send \`${prefix}help [command name]\` to get info on a specific command.`,
+        `\n❕ **You can send \`${prefix}help [command name]\` to get info on a specific command.
+        \n❔ [Support Server](https://discord.gg/Ny6zTNH)
+        \n⚠️ [GitHub issues page](https://github.com/SpectrixOfficial/bot-saber/issues)**`,
       );
 
       let embedData = new Discord.MessageEmbed()
         .setColor("#f03030")
-        .setTitle("**User commands.**")
-        .setAuthor("Bot Saber")
+        .setTitle("**User commands:**")
+        .setThumbnail("https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png")
         .setDescription(data)
         .setFooter(
-          `Did you know: The developers love ARGs.`,
+          `By Spectrix & SamHep0803 👌`,
           "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
         );
 
-      return msg.author.send(embedData)
-        .then(() => {
-          if (msg.channel.type === "dm") return;
-          msg.reply("I've sent you a DM with all my commands!");
-        })
-        .catch((err) => {
-          console.error(`Could not send help DM to ${msg.author.tag}.\n`, err);
-          msg.reply("It seems like I can't DM you. Do you have your DMs open?");
-        });
+      return msg.channel.send(embedData);
     }
 
     const name = args[0].toLowerCase();
@@ -48,7 +41,7 @@ module.exports = {
 
     data.push(`**Name:** ${command.name}`);
 
-    if (command.aliases) {
+    if (command.aliases) { // hello
       data.push(`**Aliases:** ${command.aliases.join(", ")}`);
     }
     if (command.description) {

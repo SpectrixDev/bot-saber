@@ -14,33 +14,16 @@ client.settings = new Enmap({
 
 const defaultSettings = {
   prefix: "b!",
-  welcomeChannel: "welcome",
-  welcomeMessage:
-    "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D",
 };
 
 client.on("guildDelete", (guild) => {
   client.settings.delete(guild.id);
+  client.user.setActivity(`over ${client.guilds.cache.size} servers | b!help  `, { type: 'WATCHING' })
 });
 
-client.on("guildMemberAdd", (member) => {
-  client.settings.ensure(member.guild.id, defaultSettings);
-
-  let welcomeMessage = client.settings.get(member.guild.id, "welcomeMessage");
-
-  welcomeMessage = welcomeMessage.replace("{{user}}", member.user.tag);
-
-  let welcomeChannel = member.guild.channels.cache
-  .find((channel) =>
-    channel.name === client.settings.get(member.guild.id, "welcomeChannel")
-  )
-
-  if(welcomeChannel) {
-    welcomeChannel
-      .send(welcomeMessage)
-      .catch(console.error);
-  }   
-});
+client.on('guildCreate', (guild) => {
+  client.user.setActivity(`over ${client.guilds.cache.size} servers | b!help`, { type: 'WATCHING' })
+})
 
 const commandFiles = fs.readdirSync("./commands").filter((file) =>
   file.endsWith(".js")
@@ -53,6 +36,7 @@ for (const file of commandFiles) {
 
 client.once("ready", () => {
   console.log("Ready!");
+  client.user.setActivity(`over ${client.guilds.cache.size} servers | b!help`, { type: 'WATCHING' })
 });
 
 client.on("message", async (message) => {

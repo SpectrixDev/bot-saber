@@ -22,11 +22,12 @@ module.exports = {
 
         const dataEmbed = new Discord.MessageEmbed()
           .setColor("#309eff")
-          .setTitle("**Latest hot games.**")
+          .setTitle("**📈 Latest hot beatmaps**")
+          .setThumbnail("https://media4.giphy.com/media/47GPQ7ZzivsemHKPvB/source.gif")
           .setAuthor("Bot Saber")
           .setDescription(generateFields(response.data.docs))
           .setFooter(
-            `Data fetched from Beat Saver.`,
+            `Data fetched from Beat Saver 🔥`,
             "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
           );
 
