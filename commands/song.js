@@ -64,7 +64,6 @@ module.exports = {
             `📥 [One click install](http://spectrix.pythonanywhere.com/?key=${key}) with [ModAssistant](https://github.com/Assistant/ModAssistant)!
             👀 [Preview this map in your browser!](https://skystudioapps.com/bs-viewer/?id=${key}) `
           )
-          .setAuthor("Bot Saber")
           .addFields(
             {
               name: "ℹ __Beatmap Info__",

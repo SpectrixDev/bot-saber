@@ -13,7 +13,6 @@ module.exports = {
       const embedData = new Discord.MessageEmbed()
         .setColor("#309eff")
         .setTitle("**Server Settings.**")
-        .setAuthor("Bot Saber")
         .setDescription(
           `The following are the server's current settings: \`\`\`${
             configProps.join("\n")

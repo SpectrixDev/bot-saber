@@ -24,7 +24,6 @@ module.exports = {
           .setColor("#309eff")
           .setTitle("**📈 Latest hot beatmaps**")
           .setThumbnail("https://media4.giphy.com/media/47GPQ7ZzivsemHKPvB/source.gif")
-          .setAuthor("Bot Saber")
           .setDescription(generateFields(response.data.docs))
           .setFooter(
             `Data fetched from Beat Saver 🔥`,

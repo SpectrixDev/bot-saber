@@ -43,7 +43,6 @@ module.exports = {
             .setColor("#309eff")
             .setTitle(`**User:** ${playerName}`)
             .setURL(`https://new.scoresaber.com/u/${playerId}`)
-            .setAuthor("Bot Saber")
             .addFields(
               {
                 name: "ℹ __Player Info__",
@@ -127,7 +126,6 @@ module.exports = {
                 .setColor("#309eff")
                 .setTitle(`**User:** ${playerName}`)
                 .setURL(`https://new.scoresaber.com/u/${playerId}`)
-                .setAuthor("Bot Saber")
                 .addFields(
                   {
                     name: "ℹ __Player Info__",
@@ -159,6 +157,7 @@ module.exports = {
 
               msg.channel.send(dataEmbed);
             })
+            
             .catch((err) => {
               console.log(err);
             });
@@ -168,6 +167,9 @@ module.exports = {
           msg.channel.send(`:x: User ${args[1]} not found!`);
         });
       msg.channel.stopTyping();
+      } else {
+        msg.channel.send(":x: Incorrect use of command! Use `b!help profile` for help!");
+        
+      }
     }
-  },
-};
+  };

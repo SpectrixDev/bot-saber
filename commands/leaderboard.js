@@ -22,7 +22,6 @@ module.exports = {
         var embedData = new Discord.MessageEmbed()
           .setColor("#309eff")
           .setTitle("🏆 **Top 10 Players Leaderboard.**")
-          .setAuthor("Bot Saber")
           .setThumbnail("https://pbs.twimg.com/profile_images/1205366947543519232/ylj1LoJO_400x400.png")
           .setDescription(getTenPlayers(res.data.players))
           .setFooter(
