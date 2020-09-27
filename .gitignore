@@ -2,6 +2,7 @@
 config.json
 
 .vscode/*
+.vs/*
 
 # Logs
 logs
