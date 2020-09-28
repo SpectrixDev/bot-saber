@@ -3,7 +3,11 @@ config.json
 
 .vscode/*
 .vs/*
-.data/*
+/data/*
+
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # Logs
 logs
