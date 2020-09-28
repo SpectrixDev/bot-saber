@@ -58,7 +58,7 @@ client.on("message", async (message) => {
 
   if (commandFile.args && !args.length) {
     return message.channel.send(
-      `You didn't provide any arguments, ${message.author}`,
+      `❌ You didn't provide any arguments, ${message.author}... <:thronking:503200655507456003>`,
     );
   }
 
@@ -66,7 +66,7 @@ client.on("message", async (message) => {
     commandFile.execute(message, args, client, guildConf, defaultSettings);
   } catch (err) {
     console.error(err);
-    message.reply("❌ There was an error trying to execute that command!");
+    message.reply(`❌ There was an error trying to execute that command! Report this to my devs! (${guildConf.prefix}help)`)
   }
 });
 

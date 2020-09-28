@@ -27,7 +27,7 @@ module.exports = {
           .setDescription(generateFields(response.data.docs))
           .setFooter(
             `Data fetched from Beat Saver 🔥`,
-            "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+            "https://cdn.discordapp.com/attachments/478201257417244675/760182130352586802/unknown.png",
           );
 
         msg.channel.send(dataEmbed);

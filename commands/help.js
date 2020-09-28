@@ -21,11 +21,11 @@ module.exports = {
       let embedData = new Discord.MessageEmbed()
         .setColor("#f03030")
         .setTitle("**User commands:**")
-        .setThumbnail("https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png")
+        .setThumbnail("https://cdn.discordapp.com/attachments/478201257417244675/760183259602092052/unknown.png")
         .setDescription(data)
         .setFooter(
           `By Spectrix & SamHep0803 👌`,
-          "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+          "https://cdn.discordapp.com/attachments/478201257417244675/760182130352586802/unknown.png",
         );
 
       return msg.channel.send(embedData);
@@ -41,7 +41,7 @@ module.exports = {
 
     data.push(`**Name:** ${command.name}`);
 
-    if (command.aliases) { // hello
+    if (command.aliases) {
       data.push(`**Aliases:** ${command.aliases.join(", ")}`);
     }
     if (command.description) {
@@ -50,15 +50,15 @@ module.exports = {
     if (command.usage) data.push(`**Usage:** ${command.usage}`);
 
     let embedData = new Discord.MessageEmbed()
-    .setColor("#f03030") // 
-    .setTitle(`❓ **Help:** ${command.name}`)
+    .setColor("#f03030")
+    .setTitle(`❓ **Help: **` + "`" + command.name + "`")
     .setThumbnail(
-      "https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png",
+      "https://media.discordapp.net/attachments/478201257417244675/760179214300872754/BotSaberThumbnail.png",
     )
     .setDescription(data)
     .setFooter(
       "By Spectrix & SamHep0803 👌",
-      "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+      "https://cdn.discordapp.com/attachments/478201257417244675/760182130352586802/unknown.png",
     )
 
     msg.channel.send(embedData);
