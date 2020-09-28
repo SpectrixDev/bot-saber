@@ -5,7 +5,7 @@ module.exports = {
   aliases: ["commands", "h"],
   description: "List all of the bots commands or info about a specific command",
   usage: "b!help [command name]",
-  execute(msg, args) {
+  execute(msg, args, client, guildConfig) {
     const data = [];
     const { commands } = msg.client;
 
@@ -13,7 +13,7 @@ module.exports = {
       data.push("ℹ  **__Here's a list of all the bot's commands:__**\n");
       data.push(commands.map((command) => ("• " + command.name)).join("\n"));
       data.push(
-        `\n❕ **You can send \`${prefix}help [command name]\` to get info on a specific command.
+        `\n❕ **You can send \`${guildConfig.prefix}help [command name]\` to get info on a specific command.
         \n❔ [Support Server](https://discord.gg/Ny6zTNH)
         \n⚠️ [GitHub issues page](https://github.com/SpectrixOfficial/bot-saber/issues)**`,
       );
@@ -21,7 +21,9 @@ module.exports = {
       let embedData = new Discord.MessageEmbed()
         .setColor("#f03030")
         .setTitle("**User commands:**")
-        .setThumbnail("https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png")
+        .setThumbnail(
+          "https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png",
+        )
         .setDescription(data)
         .setFooter(
           `By Spectrix & SamHep0803 👌`,
