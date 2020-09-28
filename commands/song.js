@@ -7,12 +7,14 @@ module.exports = {
   description: "Gets info about a beatmap via it's name.",
   usage: "b!song <name-of-song>",
   args: true,
+
+  
   async execute(msg, args) {
     msg.channel.startTyping();
     var config = {
       method: "get",
       url: `https://beatsaver.com/api/search/advanced/0?q=${
-        encodeURI(args.join(" "))
+        encodeURI(args.join(" ").replace(/\\\//g, " ").replace(/\//g, " "))
       }`,
       headers: {
         "Content-Type": "application/json",

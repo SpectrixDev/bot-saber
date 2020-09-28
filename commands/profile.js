@@ -164,7 +164,7 @@ module.exports = {
         })
         .catch((error) => {
           console.log(error);
-          msg.channel.send(`:x: User ${args[1]} not found!`);
+          msg.channel.send(`:x: User ${args[1]} not found! Try using an ID instead?`);
         });
       msg.channel.stopTyping();
       } else {

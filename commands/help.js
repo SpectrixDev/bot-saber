@@ -21,9 +21,7 @@ module.exports = {
       let embedData = new Discord.MessageEmbed()
         .setColor("#f03030")
         .setTitle("**User commands:**")
-        .setThumbnail(
-          "https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png",
-        )
+        .setThumbnail("https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png")
         .setDescription(data)
         .setFooter(
           `By Spectrix & SamHep0803 👌`,
@@ -51,6 +49,18 @@ module.exports = {
     }
     if (command.usage) data.push(`**Usage:** ${command.usage}`);
 
-    msg.channel.send(data, { split: true });
+    let embedData = new Discord.MessageEmbed()
+    .setColor("#f03030") // 
+    .setTitle(`❓ **Help:** ${command.name}`)
+    .setThumbnail(
+      "https://media.discordapp.net/attachments/753288806928482354/759496798095015946/unknown.png",
+    )
+    .setDescription(data)
+    .setFooter(
+      "By Spectrix & SamHep0803 👌",
+      "https://pbs.twimg.com/profile_images/1191299666048167936/tyGQRx5x_400x400.jpg",
+    )
+
+    msg.channel.send(embedData);
   },
 };
