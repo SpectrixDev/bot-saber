@@ -222,6 +222,8 @@ function durationCheck(input) {
   if (input == 0) {
     return "Not Specified.";
   } else {
-    return input;
+    var minutes = Math.floor(input / 60);
+    var seconds = input - minutes * 60;
+    return `${minutes}:${seconds}`
   }
 }
