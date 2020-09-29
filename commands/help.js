@@ -14,6 +14,7 @@ module.exports = {
       data.push(commands.map((command) => ("• " + command.name)).join("\n"));
       data.push(
         `\n❕ **You can send \`${guildConfig.prefix}help [command name]\` to get info on a specific command.
+        \n🔰 [Add the bot to your server!](https://discord.com/oauth2/authorize?client_id=753289892007510017&scope=bot&permissions=74837056)
         \n❔ [Support Server](https://discord.gg/Ny6zTNH)
         \n⚠️ [GitHub issues page](https://github.com/SpectrixOfficial/bot-saber/issues)**`,
       );
