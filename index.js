@@ -1,7 +1,10 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const Enmap = require("enmap");
-const { prefix, token } = require("./config.json");
+const { prefix, token, devToken } = require("./config.json");
+const { config } = require("process");
+
+const DEBUG = true;
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -70,4 +73,4 @@ client.on("message", async (message) => {
   }
 });
 
-client.login(token);
+client.login(DEBUG ? devToken : token);
