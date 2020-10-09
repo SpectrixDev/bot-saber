@@ -74,7 +74,7 @@ module.exports = {
           .setTitle(`**Beatmap:** ${name}`)
           .setURL(`https://beatsaver.com/beatmap/${key}`)
           .setDescription(
-            `📥 [One click install](http://spectrix.pythonanywhere.com/?key=${key}) with [ModAssistant](https://github.com/Assistant/ModAssistant)!
+            `📥 [One click install](http://spectrix.pythonanywhere.com/botsaber/?key=${key}) with [ModAssistant](https://github.com/Assistant/ModAssistant)!
             👀 [Preview this map in your browser!](https://skystudioapps.com/bs-viewer/?id=${key}) `
           )
           .addFields(
