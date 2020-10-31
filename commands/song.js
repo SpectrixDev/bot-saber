@@ -218,12 +218,20 @@ function aiOrNo(input) {
   }
 }
 
+function pad_with_zeroes(number, length) {
+    var my_string = '' + number;
+    while (my_string.length < length) {
+        my_string = '0' + my_string;
+    }
+    return my_string;
+};
+
 function durationCheck(input) {
   if (input == 0) {
     return "Not Specified.";
   } else {
     var minutes = Math.floor(input / 60);
     var seconds = input - minutes * 60;
-    return `${minutes}:${seconds}`
+    return `${minutes}:${pad_with_zeroes(seconds, 2)}`
   }
 }
