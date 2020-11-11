@@ -15,7 +15,7 @@ The bot allows users to do the following:
 
 - Search for specific beatmaps on BeatSaver and get information about them (and let's them OneClick install them through a protocol, as well as to preview the map in their browser).
 - Search for specific users on ScoreSaber and get information about them.
-- Get the current hot beatmaps availabe on BeatSaver.
+- Get the current hot beatmaps available on BeatSaver.
 - See the leaderboards of ScoreSaber.
 - Allow customization of the bot's settings such as prefix
 - More & more coming soon
