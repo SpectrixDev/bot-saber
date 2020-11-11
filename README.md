@@ -4,7 +4,7 @@
 
 Bot Saber is a discord bot handy for anyone wanting to spice up their discord server with Beat Saber features and commands. It offers a great way to integrate the game right into your server.
 
-The bot boasts a list of various commands and features. We plan to expand these commands and consistantly add more. For example, there's a BeatSaver integration and a ScoreSaber integration, allowing for beatmap searches and profile viewing from within Discord.
+The bot boasts a list of various commands and features. We plan to expand these commands and consistently add more. For example, there's a BeatSaver integration and a ScoreSaber integration, allowing for beatmap searches and profile viewing from within Discord.
 
 As well as this, the bot has per-server settings, allowing you to customize the prefix for your specific server, to avoid conflicts with other bots.
 
