@@ -2,10 +2,10 @@ const axios = require("axios");
 const Discord = require("discord.js");
 
 module.exports = {
-  name: "map",
+  name: "maps",
   aliases: ["beatmap"],
   description: "Gets info about a beatmap.",
-  usage: "b!map <map-id>",
+  usage: "b!maps <map-id>",
   args: true,
 
   
