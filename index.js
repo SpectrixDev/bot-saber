@@ -4,7 +4,7 @@ const Enmap = require("enmap");
 const { prefix, token, devToken } = require("./config.json");
 const { config } = require("process");
 
-const DEBUG = false;
+const DEBUG = true;
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();

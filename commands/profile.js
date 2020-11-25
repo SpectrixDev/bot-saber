@@ -8,15 +8,16 @@ module.exports = {
   aliases: ["user"],
   usage: "b!profile <type-of-search (id or name)> <search>",
   async execute(msg, args) {
-    msg.channel.StartTyping();
+    msg.channel.startTyping()
     if (args[0].toLowerCase() == "id") {
       msg.channel.send(await getPlayerByID(args[1]));
     } else if (args[0] == "name") {
       msg.channel.send(await getPlayerByName(args[1]));
       } else {
-        msg.channel.send(`No search type specified, defaulting to \"name\".\n${await getPlayerByName(args[0])}`);
+        msg.channel.send("No search type specified, defaulting to \"name\".");
+        msg.channel.send(await getPlayerByName(args[0]));
       }
-    msg.channel.StopTyping();
+    msg.channel.stopTyping();
     }
   };
 
