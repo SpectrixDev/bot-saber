@@ -1,47 +1,48 @@
-const axios = require("axios");
-const Discord = require("discord.js");
+const axios = require('axios');
+const Discord = require('discord.js');
 
 module.exports = {
   name: "song",
-  aliases: ["map", "beatmap"],
-  description: "Gets info about a beatmap via it's name.",
-  usage: "b!song <name-of-song>",
   args: true,
+  alias: ["map"],
+  description: "Gives details about the specified beatmap.",
   async execute(msg, args) {
-    msg.channel.startTyping()
-    if (args[0].toLowerCase() == "key") {
-      msg.channel.send(await getSongByKey(args[1]));
-    } else if (args[0] == "name") {
-      msg.channel.send(await getSongByName(args[1]));
-      } else {
-        msg.channel.send("No search type specified, defaulting to \"name\".");
-        msg.channel.send(await getSongByName(args[0]));
-      }
-    msg.channel.stopTyping();
+    msg.channel.startTyping();
+
+    if (args[0].toLowerCase() == "id") {
+      msg.channel.send(await getSongByID(args[1])); // do what it says...
+    } else if (args[0].toLowerCase() == "name") {
+      msg.channel.send(await getSongByName(args)); // also do what it says...
+    } else {
+      msg.channel.send("No search type specified, defaulting to \"name\".");
+      msg.channel.send(await getSongByName(args));
     }
-  };
-  
-async function getSongByKey(mapKey) {
+
+    msg.channel.stopTyping();
+  }
+};
+
+async function getSongByID(songID) {
   const config = {
     method: "get",
-    url: `https://beatsaver.com/api/maps/detail/${mapID}`,
+    url: `https://beatsaver.com/api/maps/detail/${songID}`,
     headers: {
       "Content-Type": "application/json",
       "User-Agent": "BeatSaberDiscordBot",
     },
   };
-  
-    let returnedEmbed;
 
-    axios(config)
-      .then(function (response) {
-        const {
+  let returnedEmbed;
+
+  await axios(config)
+    .then((res) => {
+      const {
           metadata,
           stats,
           key,
           name,
           coverURL,
-        } = response.data.docs[0];
+        } = res.data;
         const {
           difficulties,
           duration,
@@ -111,59 +112,39 @@ async function getSongByKey(mapKey) {
             `🔑 ${key} | Data from BeatSaver.`,
             "https://cdn.discordapp.com/attachments/478201257417244675/760182130352586802/unknown.png",
           );
+	returnedEmbed = mapEmbed;
+    });
+  return returnedEmbed;
+}
 
-          returnedEmbed = dataEmbed;
-        }).catch((err) => {
-          console.log(err);
-        });
-    
-        return returnedEmbed;
-    }
+async function getSongByName(args) {
+  if (args[0] == "name") {
+    args.shift();
+  }
 
-    async function getSongByName(playerName) {
-      var config = {
-        method: "get",
-        url: `https://beatsaver.com/api/search/advanced/0?q=${
-          encodeURI(args.join(" ").replace(/\\\//g, " ").replace(/\//g, " "))
-        }`,
-        headers: {
-          "Content-Type": "application/json",
-          "User-Agent": "BeatSaberDiscordBot",
-        },
-      };
+  const config = {
+    method: "get",
+    url: `https://beatsaver.com/api/search/advanced/0?q=${
+      encodeURI(args.join(" ").replace(/\\\//g, " ").replace(/\//g, " "))
+    }`,
+    headers: {
+      "Content-Type": "application/json",
+      "User-Agent": "BeatSaberDiscordBot",
+    },
+  };
 
-      var fallbackConfig = { // Need to use this
-        method: "get",
-        url: `https://beatsaver.com/api/search/text/0?q=${
-          encodeURI(args.join(" ").replace(/\\\//g, " ").replace(/\//g, " "))
-        }`,
-        headers: {
-          "Content-Type": "application/json",
-          "User-Agent": "BeatSaberDiscordBot",
-        },
-      };
-    
-      let returnedEmbed;
-    
-      await axios(config)
-        .then(async (res) => {
-          const { key } = res.data.key;
-          const embedSend = await getSongByKey(key); // oof
-          returnedEmbed = embedSend;
-        })
-        .catch(async (error) => {
-            const embedSend = await getSongByKey(key);
-            returnedEmbed = embedSend;
-            }).catch((error) => {
-                console.log(error);
-                msg.channel.send(`:x: Map not found. Try the key instead?`);
-                return;
-        });
+  let returnedEmbed;
+
+  await axios(config)
+    .then(async (res) => {
+      const { key } = res.data.docs[0];
+      const embedSend = await getSongByID(key);
+      
       returnedEmbed = embedSend;
-      return returnedEmbed;
-    }
-    
+    });
 
+  return returnedEmbed;
+}
 function aiOrNo(input) {
   if (input == "Beat Sage") {
     return "Created by AI.";
@@ -188,4 +169,4 @@ function durationCheck(input) {
     var seconds = input - minutes * 60;
     return `${minutes}:${pad_with_zeroes(seconds, 2)}`
   }
-}
+};
