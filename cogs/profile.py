@@ -15,13 +15,9 @@ class Profile(commands.Cog):
     async def profile(self, ctx, typeofsearch, *query):
         """Gets user info and stats via it's Beat Saver/Steam ID or Name."""
         if typeofsearch.lower() == "id":
-            result = requests.get(f"https://new.scoresaber.com/api/player/{quote(query)}/full").json()
+            result = requests.get(f"https://new.scoresaber.com/api/player/{query}/full").json()
         elif typeofsearch.lower() == "name":
-            nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{query}").json()
-            result = requests.get(f"https://new.scoresaber.com/api/player/{nameResult['players'][0]['playerId']}/full").json()
-        elif typeofsearch.lower() != "id" and typeofsearch.lower() !="name" and not query:
-            await ctx.send("No search type specified, defaulting to `name`...")
-            nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{typeofsearch}").json()
+            nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{quote(query)}").json()
             result = requests.get(f"https://new.scoresaber.com/api/player/{nameResult['players'][0]['playerId']}/full").json()
         else:
             return await ctx.send("Something went wrong... Ensure you provided full args, for example: `b!profile name Spectrix`")
