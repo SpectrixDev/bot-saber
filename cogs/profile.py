@@ -1,4 +1,5 @@
 import discord, asyncio, random, time, datetime, json, aiohttp, requests
+from urllib.parse import quote
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
@@ -11,15 +12,19 @@ class Profile(commands.Cog):
     
     @commands.cooldown(1, 5, BucketType.user)
     @commands.command()
-    async def profile(self, ctx, typeofsearch, query):
+    async def profile(self, ctx, typeofsearch, *query):
         """Gets user info and stats via it's Beat Saver/Steam ID or Name."""
         if typeofsearch.lower() == "id":
-            result = requests.get(f"https://new.scoresaber.com/api/player/{query}/full").json()
+            result = requests.get(f"https://new.scoresaber.com/api/player/{quote(query)}/full").json()
         elif typeofsearch.lower() == "name":
             nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{query}").json()
             result = requests.get(f"https://new.scoresaber.com/api/player/{nameResult['players'][0]['playerId']}/full").json()
+        elif typeofsearch.lower() != "id" and typeofsearch.lower() !="name" and not query:
+            await ctx.send("No search type specified, defaulting to `name`...")
+            nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{typeofsearch}").json()
+            result = requests.get(f"https://new.scoresaber.com/api/player/{nameResult['players'][0]['playerId']}/full").json()
         else:
-            return await ctx.send("Error message here")
+            return await ctx.send("Something went wrong... Ensure you provided full args, for example: `b!profile name Spectrix`")
 
         playerInfo = result['playerInfo']
         scoreStats = result['scoreStats']
