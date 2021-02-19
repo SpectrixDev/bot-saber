@@ -5,7 +5,7 @@ from discord.ext.commands.cooldowns import BucketType
 with open("config/thesacredtexts.json") as f:
     config = json.load(f)
 
-class Song(commands.cog):
+class Song(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
