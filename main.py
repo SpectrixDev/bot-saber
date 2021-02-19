@@ -10,7 +10,7 @@ with open("config/thesacredtexts.json") as f:
 class Bot_Saber(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix=commands.when_mentioned_or("b!"),
-                         owner_id=276707898091110400,
+                         owner_ids=[276707898091110400, 99819835273252864],
                          case_insensitive=True)
 
     async def update_activity(self):
