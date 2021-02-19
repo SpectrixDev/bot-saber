@@ -13,15 +13,14 @@ class Profile(commands.Cog):
     @commands.cooldown(1, 5, BucketType.user)
     @commands.command()
     async def profile(self, ctx, typeofsearch, *query):
-        """Gets user info and stats via it's Beat Saver/Steam ID or Name."""
+        """Gets user info and stats via it's Beat Saber/Steam ID or Name."""
         if typeofsearch.lower() == "id":
             result = requests.get(f"https://new.scoresaber.com/api/player/{query}/full").json()
         elif typeofsearch.lower() == "name":
-            nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{quote(query)}").json()
+            nameResult = requests.get(f"https://new.scoresaber.com/api/players/by-name/{' '.join(query)}").json()
             result = requests.get(f"https://new.scoresaber.com/api/player/{nameResult['players'][0]['playerId']}/full").json()
         else:
             return await ctx.send("Something went wrong... Ensure you provided full args, for example: `b!profile name Spectrix`")
-
         playerInfo = result['playerInfo']
         scoreStats = result['scoreStats']
 
