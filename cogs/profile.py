@@ -1,4 +1,4 @@
-import discord, asyncio, random, time, datetime, json, aiohttp, requests
+import discord, asyncio, random, json, aiohttp, requests
 from urllib.parse import quote
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
