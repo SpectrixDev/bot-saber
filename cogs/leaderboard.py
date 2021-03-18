@@ -11,6 +11,8 @@ class Leaderboard(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
+    @commands.has_permissions(manage_messages=True)
+    @commands.has_permissions(add_reactions = True)
     @commands.cooldown(1, 5, BucketType.user)
     @commands.command()
     async def leaderboard(self, ctx):
@@ -30,7 +32,10 @@ class Leaderboard(commands.Cog):
                 data = ''
                 e = ''
         paginator = BotEmbedPaginator(ctx, embed)
-        await paginator.run()
+        try:
+            await paginator.run()
+        except Exception as e:
+            await ctx.send("**:no_entry: Error! Make sure I have the correct permissions to use this command. I may need `manage_messages` perms or `add_reactions` perms. If that doesn't fix the issue, contact my devs!**")
 
 def setup(bot):
     bot.add_cog(Leaderboard(bot))

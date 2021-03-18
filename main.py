@@ -1,4 +1,4 @@
-import discord, asyncio, time, datetime, random, json, aiohttp, logging, os
+import discord, asyncio, time, datetime, random, json, aiohttp, logging, os, traceback, sys, math
 from discord.ext import commands
 from time import ctime
 from os import listdir
@@ -56,6 +56,49 @@ class Bot_Saber(commands.AutoShardedBot):
 
     async def on_guild_remove(self):
         await self.update_activity()
+
+    async def on_command_error(self, ctx, error):
+        """The event triggered when an error is raised while invoking a command.
+        ctx   : Context
+        error : Exception"""
+
+        if hasattr(ctx.command, 'on_error'):
+            return
+        
+        ignored = (commands.UserInputError)
+        error = getattr(error, 'original', error)
+        
+        if isinstance(error, ignored):
+            return
+
+        elif isinstance(error, commands.DisabledCommand):
+            return await ctx.send(f'**:no_entry: `{ctx.command}` has been disabled.**')
+
+        elif isinstance(error, commands.NoPrivateMessage):
+            try:
+                return await ctx.author.send(f'**:no_entry: `{ctx.command}` can not be used in Private Messages.**')
+            except:
+                pass
+        elif isinstance(error, commands.BadArgument):
+            if ctx.command.qualified_name == 'tag list':
+                return await ctx.send('**:no_entry: I could not find that member. Please try again.**')
+        elif isinstance(error, commands.BotMissingPermissions):
+            missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+            if len(missing) > 2:
+                fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+            else:
+                fmt = ' and '.join(missing)
+            _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
+            return await ctx.send(_message)
+        elif isinstance(error, commands.NotOwner):
+            return await ctx.send('**:no_entry: Only my owners can run that command.**')
+        elif isinstance(error, commands.CommandOnCooldown):
+            return await ctx.send(f"**:no_entry: Woah there, that command is on a cooldown for {math.ceil(error.retry_after)} seconds**")
+        elif isinstance(error, commands.CheckFailure) or isinstance(error, commands.MissingPermissions):
+            return await ctx.send('**:no_entry: You have insufficient permissions to run this command.**')
+        
+        print('Error in command: {}:'.format(ctx.command), file=sys.stderr)
+        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
     def initiate_start(self):
         with open("config/uptime.json", 'w+') as uptime:

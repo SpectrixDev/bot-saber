@@ -84,16 +84,16 @@ class admin(commands.Cog):
                 await ctx.send(f'```py\n{value}{ret}\n```')
 
     @commands.command(hidden=True)
-    async def reload(self, ctx, *, ext):
+    async def reload(self, ctx, *, ext=None):
         try:
-            if ext == 'all':
+            if ext == 'all' or not ext:
                 for extension in startup_extensions:
                     self.bot.unload_extension(extension)
                     self.bot.load_extension(extension)
             else:
                 self.bot.unload_extension(f"cogs.{ext}")
                 self.bot.load_extension(f"cogs.{ext}")
-            await ctx.message.add_reaction('a:SpectrumOkSpin:466480898049835011')
+            return await ctx.message.add_reaction('a:SpectrumOkSpin:466480898049835011')
         except Exception:
             try:
                 self.bot.unload_extension(f"{ext}")
