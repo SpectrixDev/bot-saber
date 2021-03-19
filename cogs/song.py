@@ -45,23 +45,23 @@ class Song(commands.Cog):
         metadata = result['metadata']
         stats = result['stats']
         embed = discord.Embed(title=f"**Song:** {result['name']}", 
-                                description=f""":inbox_tray: [One click install](http://spectrix.pythonanywhere.com/botsaber?key=${result['key']}) with [ModAssistant](https://github.com/Assistant/ModAssistant)!\n
-                                              :eyes: [Preview this map in your browser!](https://skystudioapps.com/bs-viewer/?id=${result['key']})""",
+                                description=f":inbox_tray: [One click install](http://spectrix.pythonanywhere.com/botsaber?key=${result['key']}) with [ModAssistant](https://github.com/Assistant/ModAssistant)!"+
+                                              f"\n:eyes: [Preview this map in your browser!](https://skystudioapps.com/bs-viewer/?id=${result['key']})",
                                 color=0xf03030, 
                                 url=f"https://beatsaver.com/beatmap/{result['key']}")
 
         author = metadata['levelAuthorName'] if metadata['automapper'] == None else metadata['automapper']
         duration = str(datetime.timedelta(seconds=int(metadata['duration'])))
-        embed.add_field(name="ℹ __Beatmap Info__",
-                            value=f"""• **Level Author:** {author}
-                                    • **Duration:** {duration if duration[:1] != "0" else duration[:2]}
-                                    • **Beatmap BPM:** {round(int(metadata['bpm']))}""", inline=False)
+        embed.add_field(name=":information_source: __Beatmap Info__",
+                            value=f"• **Level Author:** {author}" +
+                                    f"\n• **Duration:** {duration if duration[:1] != '0' else duration[:2]}" +
+                                    f"\n• **Beatmap BPM:** {round(int(metadata['bpm']))}", inline=False)
 
         embed.add_field(name="📈 __Beatmap Stats__",
-                        value=f"""• **Downloads:** {stats['downloads']}
-                                • **Upvotes:** {stats['upVotes']}
-                                • **Downvotes:** {stats['downVotes']}
-                                • **Rating:** {round(int(stats['rating'])*100)}%""", inline=False)
+                        value=f"• **Downloads:** {stats['downloads']}" +
+                        f"\n• **Upvotes:** {stats['upVotes']}" +
+                        f"\n• **Downvotes:** {stats['downVotes']}" +
+                        f"\n• **Rating:** {round(int(stats['rating'])*100)}%", inline=False)
          
         await ctx.send(embed=embed)
 

@@ -29,16 +29,16 @@ class Profile(commands.Cog):
                               url=f"https://new.scoresaber.com/u/{playerInfo['playerId']}")
 
         embed.add_field(name="ℹ __Player Info__",
-                        value=f"""**Rank:** #{format(int(playerInfo["rank"]), ",d")}
-                                **Country Rank:** #{playerInfo["countryRank"]} ({playerInfo["country"]} :flag_{playerInfo["country"].lower()}:)
-                                **PP:** {format(int(playerInfo["pp"]), ",d")}""", inline=False)
+                        value=f"**Rank:** #{format(int(playerInfo['rank']), ',d')}" +
+                                f"\n**Country Rank:** #{playerInfo['countryRank']} ({playerInfo['country']} :flag_{playerInfo['country'].lower()}:)" +
+                                f"\n**PP:** {format(int(playerInfo['pp']), ',d')}", inline=False)
 
         embed.add_field(name="📈 __Player Stats__",
-                        value=f"""**Total Score:** {format(int(scoreStats["totalScore"]), ",d")}
-                                **Total Ranked Score:** {format(int(scoreStats["totalRankedScore"]), ",d")}
-                                **Average Ranked Accuracy:** {str(round(scoreStats["averageRankedAccuracy"], 2))}%
-                                **Total Play Count:** {scoreStats["totalPlayCount"]}
-                                **Ranked Play Count:** {scoreStats["rankedPlayCount"]}""", inline=False)
+                        value=f"**Total Score:** {format(int(scoreStats['totalScore']), ',d')}" +
+                                f"\n**Total Ranked Score:** {format(int(scoreStats['totalRankedScore']), ',d')}" +
+                                f"\n**Average Ranked Accuracy:** {str(round(scoreStats['averageRankedAccuracy'], 2))}%" +
+                                f"\n**Total Play Count:** {scoreStats['totalPlayCount']}" +
+                                f"\n**Ranked Play Count:** {scoreStats['rankedPlayCount']}", inline=False)
 
         embed.set_thumbnail(url=f"https://new.scoresaber.com{playerInfo['avatar']}")
         embed.set_footer(text=f"User ID: {playerInfo['playerId']}", icon_url="https://cdn.discordapp.com/attachments/478201257417244675/760182130352586802/unknown.png")
