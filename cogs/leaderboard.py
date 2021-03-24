@@ -34,7 +34,7 @@ class Leaderboard(commands.Cog):
         paginator = BotEmbedPaginator(ctx, embed)
         try:
             await paginator.run()
-        except Exception as e:
+        except Exception:
             await ctx.send("**:no_entry: Error! Make sure I have the correct permissions to use this command. I may need `manage_messages` perms or `add_reactions` perms. If that doesn't fix the issue, contact my devs!**")
 
 def setup(bot):

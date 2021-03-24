@@ -65,23 +65,22 @@ class Bot_Saber(commands.AutoShardedBot):
         if hasattr(ctx.command, 'on_error'):
             return
         
-        ignored = (commands.UserInputError)
         error = getattr(error, 'original', error)
         
-        if isinstance(error, ignored):
-            return
+        if isinstance(error, commands.MissingRequiredArgument):
+            return await ctx.send("**❌ You didn't provide the required arguments, do b!help if you dunno what to do... <:thronking:503200655507456003>**")
 
         elif isinstance(error, commands.DisabledCommand):
-            return await ctx.send(f'**:no_entry: `{ctx.command}` has been disabled.**')
+            return await ctx.send(f'**❌ `{ctx.command}` has been disabled.**')
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                return await ctx.author.send(f'**:no_entry: `{ctx.command}` can not be used in Private Messages.**')
+                return await ctx.author.send(f'**❌ `{ctx.command}` can not be used in Private Messages.**')
             except:
                 pass
         elif isinstance(error, commands.BadArgument):
             if ctx.command.qualified_name == 'tag list':
-                return await ctx.send('**:no_entry: I could not find that member. Please try again.**')
+                return await ctx.send('**❌ I could not find that member. Please try again.**')
         elif isinstance(error, commands.BotMissingPermissions):
             missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
             if len(missing) > 2:
@@ -91,11 +90,11 @@ class Bot_Saber(commands.AutoShardedBot):
             _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
             return await ctx.send(_message)
         elif isinstance(error, commands.NotOwner):
-            return await ctx.send('**:no_entry: Only my owners can run that command.**')
+            return await ctx.send('**❌ Only my owners can run that command.**')
         elif isinstance(error, commands.CommandOnCooldown):
-            return await ctx.send(f"**:no_entry: Woah there, that command is on a cooldown for {math.ceil(error.retry_after)} seconds**")
+            return await ctx.send(f"**❌ Woah there, that command is on a cooldown for {math.ceil(error.retry_after)} seconds**")
         elif isinstance(error, commands.CheckFailure) or isinstance(error, commands.MissingPermissions):
-            return await ctx.send('**:no_entry: You have insufficient permissions to run this command.**')
+            return await ctx.send('**❌ You have insufficient permissions to run this command.**')
         
         print('Error in command: {}:'.format(ctx.command), file=sys.stderr)
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)

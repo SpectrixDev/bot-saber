@@ -10,7 +10,7 @@ class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.cooldown(1, 5, BucketType.user)
+    @commands.cooldown(1, 2, BucketType.user)
     @commands.command()
     async def profile(self, ctx, typeofsearch, *query):
         """Gets user info and stats via it's Beat Saber/Steam ID or Name."""
