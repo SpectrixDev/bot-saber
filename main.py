@@ -7,24 +7,12 @@ from os.path import isfile, join
 with open("config/thesacredtexts.json") as f:
     config = json.load(f)
 
-### FULL THIS IN CORRECTLY BEFORE USING BOT ###
-devMode = False
-###############################################
-
-if devMode == True:
-    token = config['tokens']['devToken']
-    prefix = "d!"
-    print("####################\nDEV MODE ACTIVATED\n####################")
-else:
-    token = config['tokens']['token']
-    prefix = "b!"
-    print("####################\nNOT ON DEV MODE\n####################")
-
 class Bot_Saber(commands.AutoShardedBot):
     def __init__(self):
-        super().__init__(command_prefix=commands.when_mentioned_or(prefix),
+        super().__init__(command_prefix=commands.when_mentioned_or("b!"),
                          owner_ids=[276707898091110400, 99819835273252864],
-                         case_insensitive=True)
+                         case_insensitive=True,
+                         chunk_guilds_at_startup=False)
 
     async def update_activity(self):
         await self.change_presence(
@@ -33,15 +21,13 @@ class Bot_Saber(commands.AutoShardedBot):
                 type=1,
                 url="https://www.twitch.tv/SpectrixYT"))
         print("Updated presence")
-        if not devMode:
-            payload = {"server_count"  : len(self.guilds)}
-            url = "https://discordbots.org/api/bots/753289892007510017/stats"
-            headers = {"Authorization" : config["tokens"]["dbltoken"]}
-            async with aiohttp.ClientSession() as aioclient:
-                    await aioclient.post(
-                        url,
-                        data=payload,
-                        headers=headers)
+        payload = {"server_count"  : len(self.guilds)}
+        url = "https://discordbots.org/api/bots/753289892007510017/stats"
+        headers = {"Authorization" : config["tokens"]["dbltoken"]}
+        async with aiohttp.ClientSession() as aioclient:
+            await aioclient.post(url,
+                                data=payload,
+                                headers=headers)
             print(f"Posted payload to Discord Bot List:\n{payload}")
 
     async def on_ready(self):
@@ -126,7 +112,7 @@ class Bot_Saber(commands.AutoShardedBot):
                 self.load_extension(cogs)
                 print(f"Loaded {cogs}")
             print("\nAll Cogs Loaded\n===============\nLogging into Discord...")
-            super().run(token)
+            super().run(config['tokens']['token'])
         except Exception as e:
             print(f"\n###################\nPOSSIBLE FATAL ERROR:\n{e}\n\n\
                     THIS MEANS THE BOT HAS NOT STARTED CORRECTLY!")

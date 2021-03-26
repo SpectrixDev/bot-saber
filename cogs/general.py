@@ -100,8 +100,8 @@ class General(commands.Cog):
                 temp = generate_command_list(cog)
                 if temp != "":
                     embed.add_field(name=f'**{cog}**', value=temp, inline=False)
-            embed.add_field(name=":information_source: More info:", value="- **Type b!help command for more info on a command.**\n"+
-                                                    "- **You can also type b!help category for more info on a category.**\n\n"+
+            embed.add_field(name=":information_source: More info:", value="- **Type `b!help command` for more info on a command.**\n"+
+                                                    "- **You can also type `b!help category` for more info on a category.**\n\n"+
                                                     "🥰 **Like what you see? Vote for me on [top.gg](https://top.gg/bot/753289892007510017/vote)!\n\n"+
                                                     "🔰 [[Add me to your server]](https://discord.com/oauth2/authorize?client_id=753289892007510017&scope=bot&permissions=74837056)\n\n"+
                                                     "❓ [[Support server]](https://discord.gg/ehR2Qw4GgN)\n\n🛠 [[GitHub]](https://github.com/SpectrixDev/bot-saber)**")
