@@ -16,8 +16,8 @@ class Bot_Saber(commands.AutoShardedBot):
     async def update_activity(self):
         await self.change_presence(
             activity=discord.Activity(
-                name=f"@Bot Saber help | {len(self.guilds)} guilds!",
-                type=1,
+                name=f"{len(self.guilds)} guilds | b!help",
+                type=3,
                 url="https://www.twitch.tv/SpectrixYT"))
         print("Updated presence")
         payload = {"server_count"  : len(self.guilds)}
