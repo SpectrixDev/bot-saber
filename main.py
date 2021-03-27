@@ -11,8 +11,7 @@ class Bot_Saber(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix=commands.when_mentioned_or("b!"),
                          owner_ids=[276707898091110400, 99819835273252864],
-                         case_insensitive=True,
-                         chunk_guilds_at_startup=False)
+                         case_insensitive=True)
 
     async def update_activity(self):
         await self.change_presence(
