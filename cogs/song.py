@@ -84,8 +84,6 @@ class Beatmap(commands.Cog):
                     embed = await self.getSongInfo(result)
                     await ctx.send(embed=embed)     
 
-    @commands.has_permissions(manage_messages=True)
-    @commands.has_permissions(add_reactions = True)
     @commands.cooldown(1, 5, BucketType.user)
     @commands.command()
     async def hot(self, ctx):
