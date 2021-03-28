@@ -14,19 +14,19 @@ Bot Saber is a discord bot handy for anyone wanting to spice up their discord se
 | **Name** | **Description** | **Usage** |
 |:---:|---|---|
 | hot | Shows song the information of currently hot beatmaps on BeatSaver | `b!hot`
-| song | Get information about a song from its key, or search for songs by name | `b!song <name|key> <args>`
+| song | Get information about a song from its key, or search for songs by name | `b!song <name\|key> <args>`
 
 ### General
 | **Name** | **Description** | **Usage** |
 |:---:|---|---|
-| help | Returns command list, explanation of cogs or commands | `b!help <command|cog: optional>`
+| help | Returns command list, explanation of cogs or commands | `b!help <command\|cog: optional>`
 | ping | Returns bot latency | `b!ping `
 | uptime | See how long the bot has been online for | `b!uptime`
 
 ### Profile and Leaderboard
 | **Name** | **Description** | **Usage** |
 |:---:|---|---|
-| profile | Gets user info and stats via it's Beat Saber/Steam ID or Name | `b!profile <name|id> <args>`
+| profile | Gets user info and stats via it's Beat Saber/Steam ID or Name | `b!profile <name\|id> <args>`
 | leaderboard | Current scoresaber global leaderboard info | `b!leaderboard`
 
 
