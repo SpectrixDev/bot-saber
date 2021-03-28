@@ -8,7 +8,7 @@ with open("config/thesacredtexts.json") as f:
     config = json.load(f)
 
 ### FULL THIS IN CORRECTLY BEFORE USING BOT ###
-devMode = False
+devMode = True
 ###############################################
 
 if devMode == True:

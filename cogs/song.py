@@ -41,7 +41,11 @@ class Beatmap(commands.Cog):
                         f"\n• **Rating:** {str(round(stats['rating']*100))+'%' if stats['rating']!=0 else 'Unrated'}", inline=False)
 
         embed.add_field(name="📊 Beatmap Difficulties",
-                        value="\n".join([("- " + key.title()) for key, valueofkey in metadata['difficulties'].items() if valueofkey == True]))
+                        value="\n".join([("- " + key.title()) for key, valueofkey in metadata['difficulties'].items() if valueofkey == True]), inline=False)
+
+        if len(result['description']) > 0:
+            embed.add_field(name="📋 __Description__", value=f"```\n{result['description']}```", inline=False)
+        
         
         embed.set_thumbnail(url=f"https://beatsaver.com{result['coverURL']}")
         embed.set_footer(text=f"🔑 Key: {result['key']}", icon_url=config['styling']['logo'])
@@ -70,8 +74,8 @@ class Beatmap(commands.Cog):
 
         try:
             await paginator.run()
-        except Exception:
-            await ctx.send("**:no_entry: Error! Make sure I have the correct permissions to use this command. I may need `manage_messages` perms or `add_reactions` perms. If that doesn't fix the issue, contact my devs!**")
+        except IndexError:
+            await ctx.send("**❌ No results found.** Think this is an error? Try again.")
 
     
     @song.command()

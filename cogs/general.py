@@ -134,8 +134,23 @@ class General(commands.Cog):
             msg = ' '.join(commands)
             embed.add_field(name="Not found", value=f'Command/category `{msg}` not found.')
 
-        await ctx.send(f'{ctx.author.mention}', embed=embed)
-        return
+        return await ctx.send(f'{ctx.author.mention}', embed=embed)
+
+    @commands.command()
+    async def botinfo(self, ctx):
+        """Show's Bot Saber's current discord stats"""
+        servers = str(len(self.bot.guilds))
+        users = 0
+        for guild in self.bot.guilds:
+            users += len(guild.members)
+        channels = str(len(set(self.bot.get_all_channels())))
+        em = discord.Embed(description="Current stats for Bot Saber", colour=discord.Colour(value=0x36393e))
+        em.add_field(name="Server count:", value=servers, inline=False)
+        em.add_field(name="Users bot can see:", value=str(users), inline=False)
+        em.add_field(name="Channels bot can see:", value=channels, inline=False)
+        em.set_author(name="Bot Information", icon_url=config["styling"]["logo"])
+        em.set_thumbnail(url=config["styling"]["logo"])
+        await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(General(bot))

@@ -51,11 +51,19 @@ class ProfileCommands(commands.Cog):
         async with ctx.typing():
             embeds = []
             notify = await ctx.send("**<a:red_note:760170835729580065> Searching...** This may take some time depending on the amount of people with similar names...")
-            async with aiohttp.ClientSession() as session:
-                async with session.get(f"https://new.scoresaber.com/api/players/by-name/{query}") as r:
-                    result = await r.json()
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(f"https://new.scoresaber.com/api/players/by-name/{query}") as r:
+                        result = await r.json()
+            
 
-            loop = len(result['players']) if len(result['players']) <= 10 else 10
+                loop = len(result['players']) if len(result['players']) <= 10 else 10
+            except KeyError:
+                try:
+                    await notify.delete()
+                except Exception:
+                    pass
+                await ctx.send("**❌ No results found.** Think this is an error? Try again.")
             for i in range(loop):
                 try:
                     async with aiohttp.ClientSession() as session:
