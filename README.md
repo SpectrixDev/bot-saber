@@ -3,6 +3,10 @@
 [![Version](https://img.shields.io/badge/version-2.0-blue.svg?cacheSeconds=2592000)](https://img.shields.io/badge/version-2.0-blue.svg?cacheSeconds=2592000)
 [![discord.py](https://img.shields.io/badge/discord-py-blue.svg)](https://github.com/Rapptz/discord.py/tree/rewrite)
 [![python 3.7](https://img.shields.io/badge/python-3.7-orange.svg)](https://www.python.org/)
+<br>
+
+[![On top.gg](https://top.gg/api/widget/753289892007510017.svg)](https://top.gg/bot/753289892007510017) 
+
 
 Bot Saber is a discord bot handy for anyone wanting to spice up their discord server with Beat Saber features and commands. It offers a great way to integrate the game right into your server. The bot boasts a list of various commands and features. We plan to expand these commands and consistently add more. For example, there's a BeatSaver integration and a ScoreSaber integration, allowing for beatmap searches and profile viewing from within Discord.
 
