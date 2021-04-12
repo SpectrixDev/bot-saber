@@ -11,6 +11,23 @@ class LeaderboardCommands(commands.Cog):
     """ Commands that use the ScoreSaber leaderboard """
     def __init__(self, bot):
         self.bot = bot
+
+    async def cog_after_invoke(self, ctx):
+        try:
+            if ctx.command.is_on_cooldown(ctx):
+                headers = {"Authorization" : config["tokens"]["dbltoken"]}
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://top.gg/api/bots/753289892007510010/votes", headers=headers) as r:
+                        result = await r.json()
+                for i in result:
+                    if i['id'] == str(ctx.author.id):
+                        ctx.command.reset_cooldown(ctx)
+        except TypeError:
+            pass
+
+        except Exception as e:
+            print(e)
+            pass
     
     @commands.has_permissions(manage_messages=True)
     @commands.has_permissions(add_reactions = True)
