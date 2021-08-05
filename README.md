@@ -17,8 +17,8 @@ Bot Saber is a discord bot handy for anyone wanting to spice up their discord se
 ### Beatmap
 | **Name** | **Description** | **Usage** |
 |:---:|---|---|
-| hot | Shows song the information of currently hot beatmaps on BeatSaver | `b!hot`
-| song | Get information about a song from its key, or search for songs by name | `b!song <name\|key> <args>`
+| latest |Returns a few of the most recently published beatmaps on beatsaver | `b!latest`
+| song | Get information about a song from its key, or search for songs by name | `b!song <name\|id> <args>`
 
 ### General
 | **Name** | **Description** | **Usage** |
