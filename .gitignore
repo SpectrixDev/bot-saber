@@ -4,6 +4,7 @@
 *.vs
 config/
 ./config
+.code-workspace
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

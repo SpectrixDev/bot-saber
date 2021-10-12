@@ -65,7 +65,8 @@ class Beatmap(commands.Cog):
         async with ctx.typing():
             embeds = []
             async with aiohttp.ClientSession(headers=headers) as session:
-                async with session.get(f"http://api.beatsaver.com/search/text/0?q={query}&sortOrder=Rating&automapper=true") as r:
+                async with session.get(f"https://api.beatsaver.com/search/text/0?q={query}&sortOrder=Rating&automapper=true") as r:
+                    print(r)
                     result = await r.json()
             for i in range(len(result['docs']) if len(result['docs']) <= 10 else 10):
                 embeds.append(await self.getSongInfo(result['docs'][i]))
@@ -83,7 +84,7 @@ class Beatmap(commands.Cog):
         """Lets you search for a song by its id to get song information"""
         async with ctx.typing():
             async with aiohttp.ClientSession(headers=headers) as session:
-                async with session.get(f"http://api.beatsaver.com/maps/id/{id}") as r:
+                async with session.get(f"https://api.beatsaver.com/maps/id/{id}") as r:
                     result = await r.json()
                     embed = await self.getSongInfo(result)
                     await ctx.send(embed=embed)     
@@ -97,7 +98,7 @@ class Beatmap(commands.Cog):
 
         async with ctx.typing():
             async with aiohttp.ClientSession(headers=headers) as session:
-                async with session.get("http://api.beatsaver.com/maps/latest?automapper=true") as r:
+                async with session.get("https://api.beatsaver.com/maps/latest?automapper=true") as r:
                     result = await r.json()
 
             for i in result['docs']:

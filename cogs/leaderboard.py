@@ -20,7 +20,7 @@ class LeaderboardCommands(commands.Cog):
         """Current scoresaber global leaderboard info"""
         async with ctx.typing():
             async with aiohttp.ClientSession() as session:
-                async with session.get("http://new.scoresaber.com/api/players/1") as r:
+                async with session.get("https://new.scoresaber.com/api/players/1") as r:
                     result = await r.json()
             data = ''
             embed = []

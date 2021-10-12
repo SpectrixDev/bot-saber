@@ -8,7 +8,7 @@ with open("config/thesacredtexts.json") as f:
     config = json.load(f)
 
 ### FULL THIS IN CORRECTLY BEFORE USING BOT ###
-devMode = False
+devMode = True
 ###############################################
 
 if devMode == True:
@@ -24,7 +24,8 @@ class Bot_Saber(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix=commands.when_mentioned_or(prefix),
                          owner_ids=[276707898091110400, 99819835273252864],
-                         case_insensitive=True)
+                         case_insensitive=True,
+                         slash_commands=True)
 
     async def update_activity(self):
         await self.change_presence(
