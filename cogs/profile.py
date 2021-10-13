@@ -38,7 +38,6 @@ class ProfileCommands(commands.Cog):
         return embed
 
 
-
     @commands.cooldown(1, 5, BucketType.user)
     @commands.group(aliases=['user'])
     async def profile(self, ctx):
@@ -55,7 +54,6 @@ class ProfileCommands(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get(f"https://new.scoresaber.com/api/players/by-name/{query}") as r:
                         result = await r.json()
-            
 
                 loop = len(result['players']) if len(result['players']) <= 10 else 10
             except KeyError:
@@ -74,7 +72,6 @@ class ProfileCommands(commands.Cog):
                 except Exception as e:
                     print("Error in profile name\n" + e)
                     pass
-
             
             try:
                 await notify.delete()

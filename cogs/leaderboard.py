@@ -12,8 +12,6 @@ class LeaderboardCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.has_permissions(manage_messages=True)
-    @commands.has_permissions(add_reactions = True)
     @commands.cooldown(1, 5, BucketType.user)
     @commands.command()
     async def leaderboard(self, ctx):
