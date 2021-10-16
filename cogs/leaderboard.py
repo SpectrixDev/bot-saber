@@ -1,10 +1,12 @@
-import discord, asyncio, json, aiohttp
+import discord, asyncio, random, time, datetime, json, aiohttp, requests, humanize, psutil, logging, platform
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from disputils import BotEmbedPaginator
 from discord import Embed
 
-with open("config/thesacredtexts.json") as f:
+log = logging.getLogger(__name__)
+
+with open("config.json") as f:
     config = json.load(f)
 
 class LeaderboardCommands(commands.Cog):

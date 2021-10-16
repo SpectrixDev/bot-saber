@@ -1,10 +1,12 @@
-import json, discord, asyncio, json, math, aiohttp, datetime
+import discord, asyncio, random, time, datetime, json, aiohttp, requests, humanize, psutil, logging, platform
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from disputils import BotEmbedPaginator
 from discord import Embed
 
-with open("config/thesacredtexts.json") as f:
+log = logging.getLogger(__name__)
+
+with open("config.json") as f:
     config = json.load(f)
 
 headers = {
@@ -66,7 +68,6 @@ class Beatmap(commands.Cog):
             embeds = []
             async with aiohttp.ClientSession(headers=headers) as session:
                 async with session.get(f"https://api.beatsaver.com/search/text/0?q={query}&sortOrder=Rating&automapper=true") as r:
-                    print(r)
                     result = await r.json()
             for i in range(len(result['docs']) if len(result['docs']) <= 10 else 10):
                 embeds.append(await self.getSongInfo(result['docs'][i]))

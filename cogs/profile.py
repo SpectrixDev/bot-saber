@@ -1,11 +1,14 @@
-import discord, asyncio, random, json, aiohttp, requests
+import discord, asyncio, random, time, datetime, json, aiohttp, requests, humanize, psutil, logging, platform
 from urllib.parse import quote
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 from disputils import BotEmbedPaginator
 from discord import Embed
 
-with open("config/thesacredtexts.json") as f:
+
+log = logging.getLogger(__name__)
+
+with open("config.json") as f:
     config = json.load(f)
 
 class ProfileCommands(commands.Cog):
@@ -91,8 +94,6 @@ class ProfileCommands(commands.Cog):
                     result = await r.json()
                     embed = await self.getProfileInfo(result)
                     await ctx.send(embed=embed)
-
-
 
 def setup(bot):
     bot.add_cog(ProfileCommands(bot))
