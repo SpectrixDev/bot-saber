@@ -3,6 +3,11 @@ import discord
 from discord.ext import commands
 from utils.formats import *  # pylint: disable=wildcard-import
 
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 log = logging.getLogger(__name__)
 
 with open("config.json") as f:
