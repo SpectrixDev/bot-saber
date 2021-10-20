@@ -1,0 +1,22 @@
+{
+	"name": "bot-saber",
+	"version": "1.0.0",
+	"description": "Typescript rewrite for bot-saber",
+	"main": "src/index.ts",
+	"repository": "https://github.com/SpectrixDev/bot-saber",
+	"author": "SamHep0803 and Spectrix",
+	"license": "MIT",
+	"dependencies": {
+		"discord.js": "^13.2.0"
+	},
+	"devDependencies": {
+		"consola": "^2.15.3",
+		"dotenv-safe": "^8.2.0",
+		"nodemon": "^2.0.14",
+		"ts-node": "^10.3.0",
+		"typescript": "^4.4.4"
+	},
+	"scripts": {
+		"start": "nodemon --exec ts-node src/index.ts"
+	}
+}
