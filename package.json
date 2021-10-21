@@ -7,9 +7,11 @@
 	"author": "SamHep0803 and Spectrix",
 	"license": "MIT",
 	"dependencies": {
-		"discord.js": "^13.2.0"
+		"discord.js": "^13.2.0",
+		"glob": "^7.2.0"
 	},
 	"devDependencies": {
+		"@types/glob": "^7.2.0",
 		"consola": "^2.15.3",
 		"dotenv-safe": "^8.2.0",
 		"nodemon": "^2.0.14",
