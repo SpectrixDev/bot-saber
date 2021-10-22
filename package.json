@@ -12,6 +12,7 @@
 	},
 	"devDependencies": {
 		"@types/glob": "^7.2.0",
+		"@types/node-fetch": "^3.0.3",
 		"consola": "^2.15.3",
 		"dotenv-safe": "^8.2.0",
 		"nodemon": "^2.0.14",
