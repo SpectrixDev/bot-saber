@@ -4,10 +4,12 @@ import consola, { Consola } from "consola";
 import { Command } from "../interfaces/Command";
 import { Event } from "../interfaces/Event";
 import { globPromise } from "../utils/globPromise";
+import { Button } from "../interfaces/Button";
 
 export class BSClient extends Client {
 	public logger: Consola = consola;
 	public commands: Collection<string, Command> = new Collection();
+	public buttons: Collection<string, Button> = new Collection();
 	public events: Collection<string, Event> = new Collection();
 
 	public constructor() {
@@ -32,5 +34,3 @@ export class BSClient extends Client {
 		});
 	}
 }
-
-//TODO figure out how interaction commands work
