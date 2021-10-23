@@ -1,32 +1,16 @@
 import fetch from "node-fetch";
+import { SearchResult, Song } from "../interfaces/Song";
 
-interface SongResult {
-	id: string;
-	name: string;
-	description: string;
-	uploader: {
-		name: string;
-	};
-	metadata: {
-		bpm: number;
-		duration: number;
-	};
-	stats: {
-		downloads: number;
-		upvotes: number;
-		downvotes: number;
-		score: number;
-	};
-	ranked: boolean;
-	versions: Version[];
-}
+export const getSongById = async (id: string): Promise<Song> => {
+  const response = await fetch(`https://api.beatsaver.com/maps/id/${id}`);
+  const song = (await response.json()) as Song;
+  return song;
+};
 
-interface Version {
-	coverURL: string;
-}
-
-export const getSongById = async (id: string): Promise<SongResult> => {
-	const response = await fetch(`https://api.beatsaver.com/maps/id/${id}`);
-	const result: SongResult = await response.json();
-	return result;
+export const searchSongByName = async (name: string): Promise<Song> => {
+  const response = await fetch(
+    `https://api.beatsaver.com/search/text/0?q=${name}&sortOrder=Relevance&automapper=true`
+  );
+  const searchResult = (await response.json()) as SearchResult;
+  return searchResult.docs[0] as Song;
 };
