@@ -3,7 +3,7 @@ import { getSongById, searchSongByName } from "../../api/beatSaver";
 import { Run } from "../../interfaces/Command";
 import { createSongEmbed } from "../../utils/song/createSongEmbed";
 
-export const run: Run = async (_client, commandInteraction, options) => {
+export const run: Run = async (client, commandInteraction, options) => {
   const subcommand = options.getSubcommand();
   if (subcommand === "id") {
     const value = options.getString("value");
@@ -12,7 +12,8 @@ export const run: Run = async (_client, commandInteraction, options) => {
     }
     const song = await getSongById(value);
 
-    const embed = createSongEmbed(song);
+    const embed = createSongEmbed(song, client);
+    if (!embed) return;
 
     await commandInteraction.reply({ embeds: [embed] });
   }
@@ -24,7 +25,8 @@ export const run: Run = async (_client, commandInteraction, options) => {
     }
     const song = await searchSongByName(value);
 
-    const embed = createSongEmbed(song);
+    const embed = createSongEmbed(song, client);
+    if (!embed) return;
 
     await commandInteraction.reply({ embeds: [embed] });
   }

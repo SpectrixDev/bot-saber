@@ -8,6 +8,7 @@ export interface Song {
   metadata: {
     bpm: number;
     duration: number;
+    levelAuthorName: string;
   };
   stats: {
     downloads: number;
@@ -21,6 +22,19 @@ export interface Song {
 
 export interface Version {
   coverURL: string;
+  diffs: Difficulty[];
+}
+
+export interface Difficulty {
+  difficulty: string;
+  characteristic:
+  | "Standard"
+  | "OneSaber"
+  | "NoArrows"
+  | "90Degree"
+  | "360Degree"
+  | "Lightshow"
+  | "Lawless";
 }
 
 export interface SearchResult {
