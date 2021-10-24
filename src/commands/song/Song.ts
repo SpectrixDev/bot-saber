@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionData } from "discord.js";
-import { getSongById, searchSongByName } from "../../api/beatSaver";
+import { getSongById, searchSongByName } from "../../api/song";
 import { Run } from "../../interfaces/Command";
 import { createSongEmbed } from "../../utils/song/createSongEmbed";
 
@@ -33,7 +33,7 @@ export const run: Run = async (client, commandInteraction, options) => {
 };
 
 export const name: string = "song";
-export const description: string = "Get info on a song/beatmap";
+export const description: string = "Get info on a song/beatmap on BeatSaver.";
 export const options: ApplicationCommandOptionData[] = [
   {
     type: "SUB_COMMAND",
@@ -42,8 +42,8 @@ export const options: ApplicationCommandOptionData[] = [
     options: [
       {
         type: "STRING",
-        name: "value",
-        description: "Value to get song info from.",
+        name: "search",
+        description: "Search term to get song info from.",
         required: true,
       },
     ],
@@ -55,8 +55,8 @@ export const options: ApplicationCommandOptionData[] = [
     options: [
       {
         type: "STRING",
-        name: "value",
-        description: "Value to get song info from.",
+        name: "search",
+        description: "Search term to get song info from.",
         required: true,
       },
     ],
