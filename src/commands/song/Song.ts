@@ -6,11 +6,11 @@ import { createSongEmbed } from "../../utils/song/createSongEmbed";
 export const run: Run = async (client, commandInteraction, options) => {
   const subcommand = options.getSubcommand();
   if (subcommand === "id") {
-    const value = options.getString("value");
-    if (!value) {
+    const search = options.getString("search");
+    if (!search) {
       return;
     }
-    const song = await getSongById(value);
+    const song = await getSongById(search);
 
     const embed = createSongEmbed(song, client);
     if (!embed) return;
@@ -19,16 +19,44 @@ export const run: Run = async (client, commandInteraction, options) => {
   }
 
   if (subcommand === "name") {
-    const value = options.getString("value");
-    if (!value) {
+    const search = options.getString("search");
+    if (!search) {
       return;
     }
-    const song = await searchSongByName(value);
+    const songs = await searchSongByName(search);
 
-    const embed = createSongEmbed(song, client);
-    if (!embed) return;
+    if (!songs) return;
 
-    await commandInteraction.reply({ embeds: [embed] });
+    const embeds = []
+
+    for (var song of songs) { 
+      embeds.push(createSongEmbed(song, client))
+    }
+
+
+    const paginationEmbed = require('discordjs-button-pagination');
+    const { MessageEmbed , MessageButton} = require('discord.js');
+
+
+    const button1 = new MessageButton()
+                .setCustomId('previousbtn')
+                .setLabel('Previous')
+                .setStyle('SECONDARY')
+                .setEmoji('◀');
+
+    const button2 = new MessageButton()
+                .setCustomId('nextbtn')
+                .setLabel('Next')
+                .setStyle('PRIMARY')
+                .setEmoji('▶');
+
+
+    var buttonList = [
+                  button1,
+                  button2
+                ]
+
+    await paginationEmbed(commandInteraction, embeds, buttonList);
   }
 };
 

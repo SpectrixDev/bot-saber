@@ -40,3 +40,7 @@ export interface Difficulty {
 export interface SearchResult {
   docs: Song[];
 }
+
+export interface DocLengthInfo {
+  DocLength: number
+}
