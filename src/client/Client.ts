@@ -1,10 +1,10 @@
 require("dotenv-safe").config();
-import { Client, Collection, Intents } from "discord.js";
 import consola, { Consola } from "consola";
+import { Client, Collection, Intents } from "discord.js";
+import { Button } from "../interfaces/Button";
 import { Command } from "../interfaces/Command";
 import { Event } from "../interfaces/Event";
 import { globPromise } from "../utils/globPromise";
-import { Button } from "../interfaces/Button";
 
 export class BSClient extends Client {
   public logger: Consola = consola;

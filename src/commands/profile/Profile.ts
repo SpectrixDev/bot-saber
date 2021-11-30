@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionData } from "discord.js";
-import { getProfileById } from "../../api/profile";
+import { getProfileById, searchProfileByName } from "../../api/profile";
 import { Run } from "../../interfaces/Command";
+import { paginationEmbed } from "../../utils/paginationEmbed";
 import { createProfileEmbed } from "../../utils/profile/createProfileEmbed";
 
 export const run: Run = async (client, commandInteraction, options) => {
@@ -18,25 +19,25 @@ export const run: Run = async (client, commandInteraction, options) => {
     await commandInteraction.reply({ embeds: [embed] });
   }
 
-  // if (subcommand === "name") {
-  //   const search = options.getString("search");
-  //   if (!search) {
-  //     return;
-  //   }
-  //   const songs = await searchSongByName(search);
+  if (subcommand === "name") {
+    const search = options.getString("search");
+    if (!search) {
+      return;
+    }
+    const profiles = await searchProfileByName(search);
 
-  //   if (!songs) return;
+    if (!profiles) return;
 
-  //   const embeds = [];
+    const embeds = [];
 
-  //   for (var song of songs) {
-  //     const songEmbed = createSongEmbed(song, client);
-  //     if (!songEmbed) return;
-  //     embeds.push(songEmbed);
-  //   }
+    for (let profile of profiles) {
+      const profileEmbed = createProfileEmbed(profile, client);
+      if (!profileEmbed) return;
+      embeds.push(profileEmbed);
+    }
 
-  //   await paginationEmbed(commandInteraction, embeds);
-  // }
+    await paginationEmbed(commandInteraction, embeds);
+  }
 };
 
 export const name: string = "profile";
@@ -62,7 +63,7 @@ export const options: ApplicationCommandOptionData[] = [
     description: "Get profile info via its name.",
     options: [
       {
-        type: "INTEGER",
+        type: "STRING",
         name: "search",
         description: "Search term to get profile info from.",
         required: true,

@@ -1,23 +1,22 @@
-import { MessageButton } from "discord.js";
 import { getLatestSongs } from "../../api/song";
 import { Run } from "../../interfaces/Command";
 import { createSongEmbed } from "../../utils/song/createSongEmbed";
 import { paginationEmbed } from "../../utils/paginationEmbed";
 
 export const run: Run = async (client, commandInteraction) => {
- const songs = await getLatestSongs();
+  const songs = await getLatestSongs();
 
- if (!songs) return;
+  if (!songs) return;
 
- const embeds = [];
+  const embeds = [];
 
- for (var song of songs) {
-  const songEmbed = createSongEmbed(song);
-  if (!songEmbed) return;
-  embeds.push(songEmbed);
- }
+  for (var song of songs) {
+    const songEmbed = createSongEmbed(client, song);
+    if (!songEmbed) return;
+    embeds.push(songEmbed);
+  }
 
- await paginationEmbed(commandInteraction, embeds);
+  await paginationEmbed(commandInteraction, embeds);
 };
 
 export const name: string = "latest";

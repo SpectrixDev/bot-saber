@@ -6,26 +6,23 @@ export const createProfileEmbed = (
   data: Profile,
   client: BSClient
 ): MessageEmbed | undefined => {
-  const { playerInfo, scoreStats } = data;
+  const { scoreStats } = data;
   const embed = new MessageEmbed()
-    .setTitle(`**Profile:** ${playerInfo.playerName}`)
+    .setTitle(`**Profile:** ${data.name}`)
     .setColor("#0000ff")
-    .setURL(`https://scoresaber.com/u/${playerInfo.playerId}`)
-    .setThumbnail(`https://new.scoresaber.com${playerInfo.avatar}`)
-    .setFooter(`🔑 ID: ${playerInfo.playerId}`, client.logo);
+    .setURL(`https://scoresaber.com/u/${data.id}`)
+    .setThumbnail(data.profilePicture)
+    .setFooter(`🔑 ID: ${data.id}`, client.logo);
 
   embed.addFields([
     {
       name: ":information_source: __Player Info__",
       value:
-        `• **Rank:** #${new Intl.NumberFormat().format(playerInfo.rank)}\n` +
+        `• **Rank:** #${new Intl.NumberFormat().format(data.rank)}\n` +
         `• **Country Rank:** #${new Intl.NumberFormat().format(
-          playerInfo.countryRank
-        )} (${playerInfo.country
-        } :flag_${playerInfo.country.toLowerCase()}:)\n` +
-        `• **PP:** ${new Intl.NumberFormat().format(
-          Math.round(playerInfo.pp)
-        )}\n`,
+          data.countryRank
+        )} (${data.country} :flag_${data.country.toLowerCase()}:)\n` +
+        `• **PP:** ${new Intl.NumberFormat().format(Math.round(data.pp))}\n`,
       inline: false,
     },
     {

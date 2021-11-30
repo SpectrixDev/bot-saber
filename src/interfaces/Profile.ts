@@ -1,21 +1,12 @@
 export interface Profile {
-  playerInfo: PlayerInfo;
-  scoreStats: Stats;
-}
-
-interface PlayerInfo {
-  playerId: string;
-  playerName: string;
-  avatar: string;
+  id: string;
+  name: string;
+  profilePicture: string;
+  country: string;
+  pp: number;
   rank: number;
   countryRank: number;
-  pp: number;
-  country: string;
-  badges: Badge[];
-}
-
-interface Badge {
-  image: string;
+  scoreStats: Stats;
 }
 
 interface Stats {
@@ -24,4 +15,5 @@ interface Stats {
   averageRankedAccuracy: number;
   totalPlayCount: number;
   rankedPlayCount: number;
+  replaysWatched: number;
 }

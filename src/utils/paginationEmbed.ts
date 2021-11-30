@@ -1,7 +1,5 @@
 import {
-  ButtonInteraction,
   CommandInteraction,
-  Interaction,
   Message,
   MessageActionRow,
   MessageButton,
@@ -22,7 +20,32 @@ export const paginationEmbed = async (
   pages: MessageEmbed[],
   timeout = 30000
 ) => {
-  let page = 0;
+  let pageIndex = 0;
+
+  const formattedPages = ((): MessageEmbed[] => {
+    let newPages = pages;
+    for (const page of newPages) {
+      if (!page.footer) {
+        page.setFooter(`Page ${pages.indexOf(page) + 1} / ${pages.length}`);
+      } else {
+        if (!page.footer.iconURL) {
+          page.setFooter(
+            `${page.footer.text} | Page ${pages.indexOf(page) + 1} / ${
+              pages.length
+            }`
+          );
+        } else {
+          page.setFooter(
+            `${page.footer.text} | Page ${pages.indexOf(page) + 1} / ${
+              pages.length
+            }`,
+            page.footer.iconURL
+          );
+        }
+      }
+    }
+    return newPages;
+  })();
 
   const startButton = new MessageButton()
     .setCustomId("start")
@@ -61,7 +84,7 @@ export const paginationEmbed = async (
   }
 
   const curPage = (await interaction.editReply({
-    embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+    embeds: [formattedPages[pageIndex]],
     components: [row],
   })) as Message;
 
@@ -79,23 +102,23 @@ export const paginationEmbed = async (
   collector.on("collect", async (i) => {
     switch (i.customId) {
       case startButton.customId:
-        page = 0;
+        pageIndex = 0;
         break;
       case prevButton.customId:
-        page = page > 0 ? --page : pages.length - 1;
+        pageIndex = pageIndex > 0 ? --pageIndex : pages.length - 1;
         break;
       case nextButton.customId:
-        page = page + 1 < pages.length ? ++page : 0;
+        pageIndex = pageIndex + 1 < pages.length ? ++pageIndex : 0;
         break;
       case endButton.customId:
-        page = pages.length - 1;
+        pageIndex = pages.length - 1;
         break;
       default:
         break;
     }
     await i.deferUpdate();
     await i.editReply({
-      embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+      embeds: [formattedPages[pageIndex]],
       components: [row],
     });
     collector.resetTimer();
@@ -110,7 +133,7 @@ export const paginationEmbed = async (
         endButton.setDisabled(true)
       );
       curPage.edit({
-        embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+        embeds: [formattedPages[pageIndex]],
         components: [disabledRow],
       });
     }
